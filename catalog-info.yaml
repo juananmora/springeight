@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "springeight"
+  description: "this is the description"
+  annotations:
+    github.com/project-slug: juananmora/springeight
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: service
+  lifecycle: experimental
+  owner: "team-a"
