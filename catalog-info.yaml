@@ -11,6 +11,6 @@ spec:
   lifecycle: production
   owner: "team-a"
   dependsOn:
-    - component:springfive
-    - component:springfour
-    - component:springseven
+  - component:springfive
+  - component:springfour
+  - component:springseven
