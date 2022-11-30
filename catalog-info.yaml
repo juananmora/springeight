@@ -6,8 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: juananmora/springeight
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-id: dev
-    backstage.io/kubernetes-label-selector: app=demo-ibermatica
+    backstage.io/kubernetes-namespace: dev
 
 spec:
   type: service
