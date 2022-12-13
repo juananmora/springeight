@@ -15,3 +15,4 @@ gantt
 ```
 
 
+[![Link to backstage in Backstage Example App, Group: backstage](http://localhost:7007/api/badges/entity/default/group/backstage/badge/pingback "Link to backstage in Backstage Example App")](http://localhost:3000/catalog/default/group/backstage)
