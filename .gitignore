@@ -5,3 +5,4 @@ target/
 
 ## Temp
 dependency-reduced-pom.xml
+.vscode/settings.json
