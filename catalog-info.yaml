@@ -6,7 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: juananmora/springeight
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-label-selector: io.kompose.service=web
+    backstage.io/kubernetes-label-selector: io.kompose.service=web,mysql
 
 spec:
   type: service
