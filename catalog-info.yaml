@@ -7,7 +7,6 @@ metadata:
     github.com/project-slug: juananmora/springeight
     backstage.io/techdocs-ref: dir:.
    backstage.io/kubernetes-label-selector: io.kompose.service=web
-    
 spec:
   type: service
   lifecycle: production
