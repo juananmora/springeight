@@ -72,8 +72,7 @@ That's it. If you need support, reach out in [#docs-like-code](https://discord.c
       A-->C;
       B-->D;
       C-->D;
-```
-```mermaid
+
 sequenceDiagram
     participant Client
     participant GreeterService
@@ -98,6 +97,7 @@ sequenceDiagram
     HelloRequest-->>-Server:
     Server->>+HelloReply: message
     HelloReply-->>-Client:
+
 ```
 
 ## Diseño de Arquitectura de microservicios
