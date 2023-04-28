@@ -73,6 +73,32 @@ That's it. If you need support, reach out in [#docs-like-code](https://discord.c
       B-->D;
       C-->D;
 ```
+```mermaid
+sequenceDiagram
+    participant Client
+    participant GreeterService
+    participant Server
+    participant HelloRequest
+    participant HelloReply
+    participant StreamObserver
+
+    Client->>+GreeterService: sendRequest()
+    GreeterService->>+Server: request(name)
+    Server-->>-GreeterService: response(message)
+    GreeterService-->>-Client: constructResponse()
+    GreeterService->>+StreamObserver: onNext()
+    GreeterService->>+StreamObserver: onCompleted()
+    StreamObserver-->>-GreeterService:
+    Server->>+GreeterService: processRequest()
+    GreeterService-->>-Server:
+    Client-->>-GreeterService:
+    Client->>+GreeterService: response(message)
+    GreeterService-->>-Client:
+    Client->>+HelloRequest: name
+    HelloRequest-->>-Server:
+    Server->>+HelloReply: message
+    HelloReply-->>-Client:
+```
 
 ## Diseño de Arquitectura de microservicios
 
