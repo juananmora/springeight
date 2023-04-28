@@ -74,22 +74,18 @@ That's it. If you need support, reach out in [#docs-like-code](https://discord.c
       C-->D;
 
 sequenceDiagram
-    participant Client
-    participant GreeterService
-    participant Server
-    participant HelloRequest
-    participant HelloReply
-    participant StreamObserver
-
-    Client->>+GreeterService: sendRequest()
-    GreeterService->>+Server: request(name)
-    Server-->>-GreeterService: response(message)
-    GreeterService-->>-Client: constructResponse()
-    GreeterService->>+StreamObserver: onNext()
-    GreeterService->>+StreamObserver: onCompleted()
-    StreamObserver-->>-GreeterService:
-    Server->>+GreeterService: processRequest()
-    GreeterService-->>-Server:
+  participant Client
+  participant GreeterService
+  Client->>+GreeterService: sayHello(HelloRequest)
+  activate GreeterService
+  GreeterService->>+GreeterService: Create reply message
+  Note over GreeterService: Appends "Kaixo " to\nrequest.getName()
+  GreeterService->>+responseObserver: onNext(HelloReply)
+  responseObserver->>-GreeterService: acknowledgement
+  GreeterService->>+responseObserver: onCompleted()
+  responseObserver->>-GreeterService: acknowledgement
+  GreeterService->>-Client: Return HelloReply
+  deactivate GreeterService
 
 ```
 
