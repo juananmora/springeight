@@ -90,13 +90,6 @@ sequenceDiagram
     StreamObserver-->>-GreeterService:
     Server->>+GreeterService: processRequest()
     GreeterService-->>-Server:
-    Client-->>-GreeterService:
-    Client->>+GreeterService: response(message)
-    GreeterService-->>-Client:
-    Client->>+HelloRequest: name
-    HelloRequest-->>-Server:
-    Server->>+HelloReply: message
-    HelloReply-->>-Client:
 
 ```
 
