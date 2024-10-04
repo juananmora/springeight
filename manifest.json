@@ -1,18 +1,24 @@
 {
-   "application": {
-      "name": "JONAPP",
-      "version": "1.0.3",
-      "components": {
-         "component": [
-            {
-               "artifact": {
-                  "artifactType": "JBOSS",
-                  "artifactName": "es.jon:springboot",
-                  "artifactVersion": "1.0.3",
-                  "artifactFileName": "springeight.jar"
-               }
-            }
-         ]
-      }
-   }
+  "application": {
+    "name": "tomcat_app",
+    "version": "1.0",
+    "project": "Default",
+    "mode": "SERIAL",
+    "components": {
+      "component": [
+        {
+          "name": "Tomcat-RC2",
+          "description": "This is tomcat component",
+          "tier": "TomcatAppTier",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "org.ec:npweb",
+            "artifactVersion": "1.0",
+            "sourceDirectory" : "/tmp/tomcatfiles",
+            "artifactFileName": "springeight.jar"
+          }
+        }
+      ]
+    }
+  }
 }
