@@ -1,7 +1,7 @@
 {
   "application": {
     "name": "tomcat_app",
-    "version": "1.0",
+    "version": "1.0.1",
     "project": "Default",
     "mode": "SERIAL",
     "components": {
