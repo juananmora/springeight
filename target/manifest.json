@@ -13,7 +13,22 @@
           "artifact": {
             "artifactType": "TOMCAT",
             "artifactName": "org.ec:npweb",
-            "artifactVersion": "1.0",
+            "artifactVersion": "1.0.5",
+            "sourceDirectory" : "/target",
+            "artifactFileName": "springeight.jar",
+            "contextPath": "myapp"
+          }
+        }
+      ],
+       "component": [
+        {
+          "name": "Tomcat-RC3",
+          "description": "This is tomcat component",
+          "tier": "TomcatAppTier",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "org.jon:springeight",
+            "artifactVersion": "1.0.6",
             "sourceDirectory" : "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
