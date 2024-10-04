@@ -1,19 +1,21 @@
 {
   "application": {
     "name": "tomcat_app",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "project": "Default",
     "mode": "SERIAL",
-    "properties": [
-      {
-        "name": "property1",
-        "value": "value1"
-      },
-      {
-        "name": "property2",
-        "value": "value2"
-      }
-    ],
+    "propertySheet": {
+      "property": [
+        {
+          "name": "property1",
+          "value": "value1"
+        },
+        {
+          "name": "property2",
+          "value": "value2"
+        }
+      ]
+    },
     "components": {
       "component": [
         {
