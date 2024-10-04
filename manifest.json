@@ -1,15 +1,15 @@
 {
    "application": {
       "name": "JONAPP",
-      "version": "1.0",
+      "version": "1.0.3",
       "components": {
          "component": [
             {
                "artifact": {
                   "artifactType": "JBOSS",
-                  "artifactName": "org.ec:jboss",
-                  "artifactVersion": "1.0",
-                  "artifactFileName": "jboss-as-helloworld.war"
+                  "artifactName": "es.jon:springboot",
+                  "artifactVersion": "1.0.3",
+                  "artifactFileName": "springeight.jar"
                }
             }
          ]
