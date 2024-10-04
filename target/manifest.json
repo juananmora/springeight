@@ -1,9 +1,13 @@
 {
   "application": {
     "name": "tomcat_app",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "project": "Default",
     "mode": "SERIAL",
+    "properties": {
+      "PRE": "PREPRODUCTION",
+      "PRO": "PRODUCTION"
+    },
     "components": {
       "component": [
         {
@@ -14,13 +18,11 @@
             "artifactType": "TOMCAT",
             "artifactName": "org.ec:npweb",
             "artifactVersion": "1.0.10",
-            "sourceDirectory" : "/target",
+            "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
           }
-        }
-      ],
-       "component": [
+        },
         {
           "name": "Tomcat-RC3",
           "description": "This is tomcat component",
@@ -29,13 +31,11 @@
             "artifactType": "TOMCAT",
             "artifactName": "org.jon:springeight",
             "artifactVersion": "1.0.12",
-            "sourceDirectory" : "/target",
+            "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
           }
-        }
-      ],
-      "component": [
+        },
         {
           "name": "Tomcat-RC1",
           "description": "This is tomcat component",
@@ -44,7 +44,7 @@
             "artifactType": "TOMCAT",
             "artifactName": "org.ec:npweb",
             "artifactVersion": "1.0.0",
-            "sourceDirectory" : "/target",
+            "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
           }
@@ -53,3 +53,4 @@
     }
   }
 }
+
