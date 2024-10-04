@@ -1,35 +1,61 @@
-"application": {
-  "name": "tomcat_app",
-  "version": "1.0.1",
-  "project": "Default",
-  "mode": "SERIAL",
-  "properties": [
-    {
-      "name": "property1",
-      "value": "value1"
-    },
-    {
-      "name": "property2",
-      "value": "value2"
-    }
-  ],
-  "components": {
-    "component": [
+{
+  "application": {
+    "name": "tomcat_app",
+    "version": "1.0.1",
+    "project": "Default",
+    "mode": "SERIAL",
+    "properties": [
       {
-        "name": "Tomcat-RC2",
-        "description": "This is tomcat component",
-        "tier": "TomcatAppTier",
-        "artifact": {
-          "artifactType": "TOMCAT",
-          "artifactName": "org.ec:npweb",
-          "artifactVersion": "1.0.10",
-          "sourceDirectory": "/target",
-          "artifactFileName": "springeight.jar",
-          "contextPath": "myapp"
-        }
+        "name": "property1",
+        "value": "value1"
+      },
+      {
+        "name": "property2",
+        "value": "value2"
       }
-    ]
+    ],
+    "components": {
+      "component": [
+        {
+          "name": "Tomcat-RC2",
+          "description": "This is tomcat component",
+          "tier": "TomcatAppTier",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "org.ec:npweb",
+            "artifactVersion": "1.0.10",
+            "sourceDirectory": "/target",
+            "artifactFileName": "springeight.jar",
+            "contextPath": "myapp"
+          }
+        },
+        {
+          "name": "Tomcat-RC3",
+          "description": "This is tomcat component",
+          "tier": "TomcatAppTier",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "org.jon:springeight",
+            "artifactVersion": "1.0.12",
+            "sourceDirectory": "/target",
+            "artifactFileName": "springeight.jar",
+            "contextPath": "myapp"
+          }
+        },
+        {
+          "name": "Tomcat-RC1",
+          "description": "This is tomcat component",
+          "tier": "TomcatAppTier2",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "org.ec:npweb",
+            "artifactVersion": "1.0.0",
+            "sourceDirectory": "/target",
+            "artifactFileName": "springeight.jar",
+            "contextPath": "myapp"
+          }
+        }
+      ]
+    }
   }
 }
-
-
