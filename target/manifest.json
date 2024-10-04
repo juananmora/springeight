@@ -1,21 +1,19 @@
 {
   "application": {
     "name": "tomcat_app",
-    "version": "1.0.2",
+    "version": "1.0.5",
     "project": "Default",
     "mode": "SERIAL",
-    "propertySheet": {
-      "property": [
-        {
-          "name": "property1",
-          "value": "value1"
-        },
-        {
-          "name": "property2",
-          "value": "value2"
-        }
-      ]
-    },
+    "properties": [
+      {
+        "name": "property1",
+        "value": "value1"
+      },
+      {
+        "name": "property2",
+        "value": "value2"
+      }
+    ],
     "components": {
       "component": [
         {
@@ -24,8 +22,8 @@
           "tier": "TomcatAppTier",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "org.ec:npweb",
-            "artifactVersion": "1.0.10",
+            "artifactName": "org.jon:front",
+            "artifactVersion": "1.1.1",
             "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
@@ -37,8 +35,8 @@
           "tier": "TomcatAppTier",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "org.jon:springeight",
-            "artifactVersion": "1.0.12",
+            "artifactName": "org.jon:detail",
+            "artifactVersion": "2.2.2",
             "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
@@ -50,8 +48,8 @@
           "tier": "TomcatAppTier2",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "org.ec:npweb",
-            "artifactVersion": "1.0.0",
+            "artifactName": "org.jon:list",
+            "artifactVersion": "3.3.3",
             "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar",
             "contextPath": "myapp"
