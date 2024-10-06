@@ -13,7 +13,7 @@
           "artifact": {
             "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
-            "artifactVersion": "1.7.25",
+            "artifactVersion": "1.7.26",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "config1",
@@ -30,7 +30,7 @@
           "artifact": {
             "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
-            "artifactVersion": "1.7.25",
+            "artifactVersion": "1.7.26",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "config1",
