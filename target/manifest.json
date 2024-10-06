@@ -1,7 +1,7 @@
 {
   "application": {
     "name": "ESSAB_FIRMA_CENTRALIZADA",
-    "version": "1.7.21",
+    "version": "1.7.22",
     "project": "BS2CLOUD",
     "mode": "PARALLEL",
     "components": {
@@ -13,7 +13,21 @@
           "artifact": {
             "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
-            "artifactVersion": "1.7.21",
+            "artifactVersion": "1.7.22",
+            "sourceDirectory": "/target",
+            "artifactFileName": "manifest.json",
+            "tomcatConfig" : "config1",
+            "contextPath": "myapp"
+          }
+        },
+        {
+          "name": "IntegrationIberpay-conf",
+          "description": "This is tomcat component",
+          "tier": "statics",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
+            "artifactVersion": "1.7.22",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "config1",
