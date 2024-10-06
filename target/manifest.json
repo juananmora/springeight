@@ -11,7 +11,7 @@
           "description": "This is tomcat component",
           "tier": "tomcat",
           "artifact": {
-            "artifactType": "TOMCAT",
+            "artifactType": "JON",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
             "artifactVersion": "1.7.25",
             "sourceDirectory": "/target",
@@ -28,7 +28,7 @@
           "description": "This is tomcat component",
           "tier": "statics",
           "artifact": {
-            "artifactType": "TOMCAT",
+            "artifactType": "JON",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
             "artifactVersion": "1.7.25",
             "sourceDirectory": "/target",
