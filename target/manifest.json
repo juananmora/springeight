@@ -19,20 +19,6 @@
             "tomcatConfig" : "config1",
             "contextPath": "myapp"
           }
-        },
-        {
-          "name": "IntegrationIberpay-conf",
-          "description": "This is tomcat component",
-          "tier": "statics",
-          "artifact": {
-            "artifactType": "TOMCAT",
-            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
-            "artifactVersion": "1.7.20",
-            "sourceDirectory": "/target",
-            "artifactFileName": "manifest.json",
-            "tomcatConfig" : "config1",
-            "contextPath": "myapp"
-          }
         }
       ]
     }
