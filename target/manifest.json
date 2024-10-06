@@ -17,7 +17,10 @@
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "config1",
-            "contextPath": "myapp"
+            "contextPath": "myapp",
+            "definitionName": "bs2cloud-canal-iberpay-integration",
+            "type": "repository-mvn",
+            "repositoryName": "artifactory_binaries_pro"
           }
         },
         {
@@ -31,7 +34,10 @@
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "config1",
-            "contextPath": "myapp"
+            "contextPath": "myapp",
+            "definitionName": "bs2cloud-canal-iberpay-integration-conf",
+            "type": "repository-mvn",
+            "repositoryName": "artifactory_binaries_pro"
           }
         }
       ]
