@@ -1,21 +1,35 @@
 {
   "application": {
-    "name": "jon_app",
-    "version": "1.0",
-    "project": "Default",
-    "mode": "SERIAL",
+    "name": "ESSAB_FIRMA_CENTRALIZADA",
+    "version": "1.7.20",
+    "project": "BS2CLOUD",
+    "mode": "PARALLEL",
     "components": {
       "component": [
         {
-          "name": "Iberpay",
+          "name": "IntegrationIberpay",
           "description": "This is tomcat component",
           "tier": "tomcat",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "org.ec:npweb",
-            "artifactVersion": "1.0",
-            "sourceDirectory" : "/tmp/tomcatfiles",
-            "artifactFileName": "npweb.war",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
+            "artifactVersion": "1.7.20",
+            "sourceDirectory": "/target",
+            "artifactFileName": "manifest.json",
+            "tomcatConfig" : "config1",
+            "contextPath": "myapp"
+          }
+        },
+        {
+          "name": "IntegrationIberpay-conf",
+          "description": "This is tomcat component",
+          "tier": "statics",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
+            "artifactVersion": "1.7.20",
+            "sourceDirectory": "/target",
+            "artifactFileName": "manifest.json",
             "tomcatConfig" : "config1",
             "contextPath": "myapp"
           }
