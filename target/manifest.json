@@ -1,18 +1,26 @@
 {
-   "application": {
-      "name": "Application Name",
-      "version": "1.0",
-      "components": {
-         "component": [
-            {
-               "artifact": {
-                  "artifactType": "JBOSS",
-                  "artifactName": "org.ec:jboss",
-                  "artifactVersion": "1.0",
-                  "artifactFileName": "jboss-as-helloworld.war"
-               }
-            }
-         ]
-      }
-   }
+  "application": {
+    "name": "jon_app",
+    "version": "1.0",
+    "project": "Default",
+    "mode": "SERIAL",
+    "components": {
+      "component": [
+        {
+          "name": "Tomcat-RC2",
+          "description": "This is tomcat component",
+          "tier": "TomcatAppTier",
+          "artifact": {
+            "artifactType": "TOMCAT",
+            "artifactName": "org.ec:npweb",
+            "artifactVersion": "1.0",
+            "sourceDirectory" : "/tmp/tomcatfiles",
+            "artifactFileName": "npweb.war",
+            "tomcatConfig" : "config1",
+            "contextPath": "myapp"
+          }
+        }
+      ]
+    }
+  }
 }
