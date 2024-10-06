@@ -1,58 +1,47 @@
 {
   "application": {
-    "name": "tomcat_app",
-    "version": "1.0.5",
-    "project": "Default",
+    "name": "ESSAB_FIRMA_CENTRALIZADA",
+    "version": "1.7.19",
+    "project": "BS2CLOUD",
     "mode": "SERIAL",
-    "properties": [
-      {
-        "name": "property1",
-        "value": "value1"
-      },
-      {
-        "name": "property2",
-        "value": "value2"
-      }
-    ],
     "components": {
       "component": [
         {
-          "name": "Tomcat-RC2",
+          "name": "IntegrationIberpay",
           "description": "This is tomcat component",
-          "tier": "TomcatAppTier",
+          "tier": "tomcat",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "org.jon:front",
-            "artifactVersion": "1.1.1",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
+            "artifactVersion": "1.7.19",
             "sourceDirectory": "/target",
-            "artifactFileName": "springeight.jar",
-            "contextPath": "myapp"
+            "artifactFileName": "manifest.json",
+            "tomcatConfig" : "config1",
+            "contextPath": "myapp",
+            "artifactType": "jar",
+            "definitionName": "bs2cloud-canal-iberpay-integration",
+            "type": "repository-mvn",
+            "repositoryName": "artifactory_binaries_pro",
+            "uri": "/com/optimissa/Iberpay/IntegrationIberpay/1.7.19/IntegrationIberpay-1.7.19.jar"
           }
         },
         {
-          "name": "Tomcat-RC3",
+          "name": "IntegrationIberpay-conf",
           "description": "This is tomcat component",
-          "tier": "TomcatAppTier",
+          "tier": "statics",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "org.jon:detail",
-            "artifactVersion": "2.2.2",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
+            "artifactVersion": "1.7.19",
             "sourceDirectory": "/target",
-            "artifactFileName": "springeight.jar",
-            "contextPath": "myapp"
-          }
-        },
-        {
-          "name": "Tomcat-RC1",
-          "description": "This is tomcat component",
-          "tier": "TomcatAppTier2",
-          "artifact": {
-            "artifactType": "TOMCAT",
-            "artifactName": "org.jon:list",
-            "artifactVersion": "3.3.3",
-            "sourceDirectory": "/target",
-            "artifactFileName": "springeight.jar",
-            "contextPath": "myapp"
+            "artifactFileName": "manifest.json",
+            "tomcatConfig" : "config1",
+            "contextPath": "myapp",
+            "artifactType": "zip",
+            "definitionName": "bs2cloud-canal-iberpay-integration-conf",
+            "type": "repository-generic",
+            "repositoryName": "artifactory_configurations_pro",
+            "uri": "/com/optimissa/Iberpay/IntegrationIberpay-conf/1.7.19/IntegrationIberpay-conf-1.7.19.zip"
           }
         }
       ]
