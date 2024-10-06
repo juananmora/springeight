@@ -7,9 +7,9 @@
     "components": {
       "component": [
         {
-          "name": "Tomcat-RC2",
+          "name": "Iberpay",
           "description": "This is tomcat component",
-          "tier": "TomcatAppTier",
+          "tier": "tomcat",
           "artifact": {
             "artifactType": "TOMCAT",
             "artifactName": "org.ec:npweb",
