@@ -1,50 +1,18 @@
 {
-  "application": {
-    "name": "ESSAB_FIRMA_CENTRALIZADA",
-    "version": "1.7.20",
-    "project": "BS2CLOUD",
-    "mode": "PARALLEL",
-    "components": {
-      "component": [
-        {
-          "name": "IntegrationIberpay",
-          "description": "This is tomcat component",
-          "tier": "tomcat",
-          "artifact": {
-            "artifactType": "TOMCAT",
-            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
-            "artifactVersion": "1.7.19",
-            "sourceDirectory": "/target",
-            "artifactFileName": "manifest.json",
-            "tomcatConfig" : "config1",
-            "contextPath": "myapp",
-            "artifactType": "jar",
-            "definitionName": "bs2cloud-canal-iberpay-integration",
-            "type": "repository-mvn",
-            "repositoryName": "artifactory_binaries_pro",
-            "uri": "/com/optimissa/Iberpay/IntegrationIberpay/1.7.19/IntegrationIberpay-1.7.19.jar"
-          }
-        },
-        {
-          "name": "IntegrationIberpay-conf",
-          "description": "This is tomcat component",
-          "tier": "statics",
-          "artifact": {
-            "artifactType": "TOMCAT",
-            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
-            "artifactVersion": "1.7.19",
-            "sourceDirectory": "/target",
-            "artifactFileName": "manifest.json",
-            "tomcatConfig" : "config1",
-            "contextPath": "myapp",
-            "artifactType": "zip",
-            "definitionName": "bs2cloud-canal-iberpay-integration-conf",
-            "type": "repository-generic",
-            "repositoryName": "artifactory_configurations_pro",
-            "uri": "/com/optimissa/Iberpay/IntegrationIberpay-conf/1.7.19/IntegrationIberpay-conf-1.7.19.zip"
-          }
-        }
-      ]
-    }
-  }
+   "application": {
+      "name": "Application Name",
+      "version": "1.0",
+      "components": {
+         "component": [
+            {
+               "artifact": {
+                  "artifactType": "JBOSS",
+                  "artifactName": "org.ec:jboss",
+                  "artifactVersion": "1.0",
+                  "artifactFileName": "jboss-as-helloworld.war"
+               }
+            }
+         ]
+      }
+   }
 }
