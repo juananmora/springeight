@@ -1,9 +1,9 @@
 {
   "application": {
     "name": "ESSAB_FIRMA_CENTRALIZADA",
-    "version": "1.7.19",
+    "version": "1.7.20",
     "project": "BS2CLOUD",
-    "mode": "SERIAL",
+    "mode": "PARALLEL",
     "components": {
       "component": [
         {
