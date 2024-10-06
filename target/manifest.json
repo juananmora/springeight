@@ -1,7 +1,7 @@
 {
   "application": {
     "name": "ESSAB_BS2CLOUD",
-    "version": "1.7.25",
+    "version": "1.7.26",
     "project": "BS2CLOUD",
     "mode": "PARALLEL",
     "components": {
@@ -11,7 +11,7 @@
           "description": "This is tomcat component",
           "tier": "tomcat",
           "artifact": {
-            "artifactType": "JON",
+            "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
             "artifactVersion": "1.7.25",
             "sourceDirectory": "/target",
@@ -28,7 +28,7 @@
           "description": "This is tomcat component",
           "tier": "statics",
           "artifact": {
-            "artifactType": "JON",
+            "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
             "artifactVersion": "1.7.25",
             "sourceDirectory": "/target",
