@@ -11,7 +11,7 @@
           "description": "This is tomcat component",
           "tier": "tomcat",
           "artifact": {
-            "artifactType": "TOMCAT",
+            "artifactType": "TOMCATNEW",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
             "artifactVersion": "1.7.30",
             "sourceDirectory": "/target",
