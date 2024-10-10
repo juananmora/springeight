@@ -1,7 +1,7 @@
 {
   "application": {
     "name": "ESSAB_BS2CLOUDNEW",
-    "version": "1.7.34",
+    "version": "1.7.35",
     "project": "BS2CLOUD",
     "mode": "PARALLEL",
     "components": {
@@ -9,7 +9,7 @@
         {
           "name": "IntegrationIberpay2",
           "description": "This is tomcat component",
-          "tier": "tomcat",
+          "tier": "TomcatJon",
           "artifact": {
             "artifactType": "TOMCATJON",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
