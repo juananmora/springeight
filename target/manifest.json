@@ -1,7 +1,7 @@
 {
   "application": {
     "name": "ESSAB_BS2CLOUDNEW",
-    "version": "1.7.38",
+    "version": "1.7.39",
     "project": "BS2CLOUD",
     "mode": "PARALLEL",
     "components": {
