@@ -16,11 +16,6 @@
             "artifactVersion": "1.0.99",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
-            "tomcatConfig" : "BS2CLOUD-CANAL",
-            "contextPath": "jar",
-            "jdbcDriver": "bs2cloud-canal-iberpay-integration",
-            "jdbcUsername": "repository-mvn",
-            "jdbcPassword": "artifactory_binaries_pro"
           }
         },
         {
@@ -35,10 +30,6 @@
             "jbossCli" : "C:\\\\Users\\\\build\\\\EAP-7.0.0\\\\bin\\\\jboss-cli.bat",            
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
-            "jdbcDriver": "BSO-NETI",
-            "jdbcConnection": "war",
-            "jdbcUsername": "repository-generic",
-            "jdbcPassword": "artifactory_binaries_pro"
           }
         },
         {
