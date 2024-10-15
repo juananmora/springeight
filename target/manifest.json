@@ -13,7 +13,7 @@
           "artifact": {
             "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpaynew",
-            "artifactVersion": "1.0.0",
+            "artifactVersion": "1.0.99",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "BS2CLOUD-CANAL",
@@ -30,7 +30,7 @@
           "artifact": {
             "artifactType": "JBOSS",
             "artifactName": "com.bs.neti:netibs",
-            "artifactVersion": "1.0.2",
+            "artifactVersion": "1.0.99",
             "jbossConfig" : "jboss7-at-win",
             "jbossCli" : "C:\\\\Users\\\\build\\\\EAP-7.0.0\\\\bin\\\\jboss-cli.bat",            
             "sourceDirectory": "/target",
