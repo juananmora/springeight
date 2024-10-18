@@ -7,55 +7,27 @@
     "components": {
       "component": [
         {
-          "name": "IntegrationIberpay2",
-          "description": "This is tomcat component",
-          "tier": "tomcat",
           "artifact": {
-            "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
-            "artifactVersion": "1.7.99",
+            "artifactVersion": "1.7.100",
             "sourceDirectory": "/target",
-            "artifactFileName": "manifest.json",
-            "tomcatConfig" : "BS2CLOUD-CANAL",
-            "contextPath": "jar",
-            "jdbcDriver": "bs2cloud-canal-iberpay-integration",
-            "jdbcUsername": "repository-mvn",
-            "jdbcPassword": "artifactory_binaries_pro"
+            "artifactFileName": "manifest.json"
           }
         },
         {
-          "name": "IntegrationIberpay3",
-          "description": "This is tomcat component",
-          "tier": "tomcat",
           "artifact": {
-            "artifactType": "JBOSS",
             "artifactName": "com.bs.neti:netibs",
-            "artifactVersion": "1.0.99",
-            "jbossConfig" : "jboss7-at-win",
-            "jbossCli" : "C:\\\\Users\\\\build\\\\EAP-7.0.0\\\\bin\\\\jboss-cli.bat",            
+            "artifactVersion": "1.0.100",       
             "sourceDirectory": "/target",
-            "artifactFileName": "manifest.json",
-            "jdbcDriver": "BSO-NETI",
-            "jdbcConnection": "war",
-            "jdbcUsername": "repository-generic",
-            "jdbcPassword": "artifactory_binaries_pro"
+            "artifactFileName": "manifest.json"
           }
         },
         {
-          "name": "IntegrationIberpay-conf2",
-          "description": "This is tomcat component",
-          "tier": "statics",
           "artifact": {
-            "artifactType": "TOMCAT",
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
-            "artifactVersion": "1.7.99",
+            "artifactVersion": "1.7.100",
             "sourceDirectory": "/target",
-            "artifactFileName": "manifest.json",
-            "tomcatConfig" : "BS2CLOUD-CANAL",
-            "contextPath": "jar",
-            "jdbcDriver": "bs2cloud-canal-iberpay-integration-conf",
-            "jdbcUsername": "repository-mvn",
-            "jdbcPassword": "artifactory_binaries_pro"
+            "artifactFileName": "manifest.json"
           }
         }
       ]
