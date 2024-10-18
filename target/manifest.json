@@ -1,7 +1,7 @@
 {
   "application": {
-    "name": "ESSAB_BS2CLOUDNEW2",
-    "version": "1.0.2",
+    "name": "ESSAB_BS2CLOUDNEW",
+    "version": "1.7.45",
     "project": "BS2CLOUD",
     "mode": "PARALLEL",
     "components": {
@@ -12,10 +12,15 @@
           "tier": "tomcat",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "com.optimissa.Iberpay:IntegrationIberpaynew",
-            "artifactVersion": "1.0.99",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
+            "artifactVersion": "1.7.99",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
+            "tomcatConfig" : "BS2CLOUD-CANAL",
+            "contextPath": "jar",
+            "jdbcDriver": "bs2cloud-canal-iberpay-integration",
+            "jdbcUsername": "repository-mvn",
+            "jdbcPassword": "artifactory_binaries_pro"
           }
         },
         {
@@ -30,6 +35,10 @@
             "jbossCli" : "C:\\\\Users\\\\build\\\\EAP-7.0.0\\\\bin\\\\jboss-cli.bat",            
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
+            "jdbcDriver": "BSO-NETI",
+            "jdbcConnection": "war",
+            "jdbcUsername": "repository-generic",
+            "jdbcPassword": "artifactory_binaries_pro"
           }
         },
         {
@@ -38,8 +47,8 @@
           "tier": "statics",
           "artifact": {
             "artifactType": "TOMCAT",
-            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-confnew",
-            "artifactVersion": "1.0.0",
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
+            "artifactVersion": "1.7.99",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json",
             "tomcatConfig" : "BS2CLOUD-CANAL",
