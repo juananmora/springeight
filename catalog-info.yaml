@@ -6,7 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: juananmora/springeight
     backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-label-selector: io.kompose.service=c4p-service
+    backstage.io/kubernetes-namespace: conference-app
 spec:
   type: service
   lifecycle: production
