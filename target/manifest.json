@@ -6,7 +6,7 @@
         {
           "artifact": {
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
-            "artifactVersion": "2.0.1",
+            "artifactVersion": "3.0.0",
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json"
           }
@@ -14,7 +14,7 @@
         {
           "artifact": {
             "artifactName": "com.bs.neti:netibs",
-            "artifactVersion": "2.0.2",       
+            "artifactVersion": "3.0.2",       
             "sourceDirectory": "/target",
             "artifactFileName": "manifest.json"
           }
@@ -22,7 +22,7 @@
         {
           "artifact": {
             "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
-            "artifactVersion": "2.0.3",
+            "artifactVersion": "3.0.3",
             "sourceDirectory": "/target",
             "artifactFileName": "springeight.jar"
           }
