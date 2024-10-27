@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     infra_id: 6b4b9936-e228-43ef-904b-6d1bd9260f4b
-    revision_id: f77df281-980d-4b64-8f6a-abd60b94e53b
+    revision_id: f31537e8-4616-4c4e-b578-65100ccec303
     workflow_id: 76e857c1-5024-4a5c-bf25-a191032b9780
     workflows.argoproj.io/controller-instanceid: 6b4b9936-e228-43ef-904b-6d1bd9260f4b
   name: conference-app
