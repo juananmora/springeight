@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     infra_id: 6b4b9936-e228-43ef-904b-6d1bd9260f4b
-    revision_id: f31537e8-4616-4c4e-b578-65100ccec303
+    revision_id: 0f93f39a-5a48-44eb-b380-3e3b6c95af8a
     workflow_id: 76e857c1-5024-4a5c-bf25-a191032b9780
     workflows.argoproj.io/controller-instanceid: 6b4b9936-e228-43ef-904b-6d1bd9260f4b
   name: conference-app
@@ -33,6 +33,9 @@ spec:
     - - arguments: {}
         name: pod-delete-i1c
         template: pod-delete-i1c
+      - arguments: {}
+        name: pod-delete-8ep
+        template: pod-delete-8ep
     - - arguments: {}
         name: cleanup-chaos-resources
         template: cleanup-chaos-resources
@@ -50,6 +53,158 @@ spec:
       artifacts:
       - name: pod-delete-i1c
         path: /tmp/pod-delete-i1c.yaml
+        raw:
+          data: |
+            apiVersion: litmuschaos.io/v1alpha1
+            description:
+              message: |
+                Deletes a pod belonging to a deployment/statefulset/daemonset
+            kind: ChaosExperiment
+            metadata:
+              name: pod-delete
+              labels:
+                name: pod-delete
+                app.kubernetes.io/part-of: litmus
+                app.kubernetes.io/component: chaosexperiment
+                app.kubernetes.io/version: 3.11.0
+            spec:
+              definition:
+                scope: Namespaced
+                permissions:
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - pods
+                    verbs:
+                      - create
+                      - delete
+                      - get
+                      - list
+                      - patch
+                      - update
+                      - deletecollection
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - events
+                    verbs:
+                      - create
+                      - get
+                      - list
+                      - patch
+                      - update
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - configmaps
+                    verbs:
+                      - get
+                      - list
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - pods/log
+                    verbs:
+                      - get
+                      - list
+                      - watch
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - pods/exec
+                    verbs:
+                      - get
+                      - list
+                      - create
+                  - apiGroups:
+                      - apps
+                    resources:
+                      - deployments
+                      - statefulsets
+                      - replicasets
+                      - daemonsets
+                    verbs:
+                      - list
+                      - get
+                  - apiGroups:
+                      - apps.openshift.io
+                    resources:
+                      - deploymentconfigs
+                    verbs:
+                      - list
+                      - get
+                  - apiGroups:
+                      - ""
+                    resources:
+                      - replicationcontrollers
+                    verbs:
+                      - get
+                      - list
+                  - apiGroups:
+                      - argoproj.io
+                    resources:
+                      - rollouts
+                    verbs:
+                      - list
+                      - get
+                  - apiGroups:
+                      - batch
+                    resources:
+                      - jobs
+                    verbs:
+                      - create
+                      - list
+                      - get
+                      - delete
+                      - deletecollection
+                  - apiGroups:
+                      - litmuschaos.io
+                    resources:
+                      - chaosengines
+                      - chaosexperiments
+                      - chaosresults
+                    verbs:
+                      - create
+                      - list
+                      - get
+                      - patch
+                      - update
+                      - delete
+                image: litmuschaos.docker.scarf.sh/litmuschaos/go-runner:3.11.0
+                imagePullPolicy: Always
+                args:
+                  - -c
+                  - ./experiments -name pod-delete
+                command:
+                  - /bin/bash
+                env:
+                  - name: TOTAL_CHAOS_DURATION
+                    value: "15"
+                  - name: RAMP_TIME
+                    value: ""
+                  - name: FORCE
+                    value: "true"
+                  - name: CHAOS_INTERVAL
+                    value: "5"
+                  - name: PODS_AFFECTED_PERC
+                    value: ""
+                  - name: TARGET_CONTAINER
+                    value: ""
+                  - name: TARGET_PODS
+                    value: ""
+                  - name: DEFAULT_HEALTH_CHECK
+                    value: "false"
+                  - name: NODE_LABEL
+                    value: ""
+                  - name: SEQUENCE
+                    value: parallel
+                labels:
+                  name: pod-delete
+                  app.kubernetes.io/part-of: litmus
+                  app.kubernetes.io/component: experiment-job
+                  app.kubernetes.io/version: 3.11.0
+      - name: pod-delete-8ep
+        path: /tmp/pod-delete-8ep.yaml
         raw:
           data: |
             apiVersion: litmuschaos.io/v1alpha1
@@ -275,6 +430,66 @@ spec:
       labels:
         weight: "10"
     name: pod-delete-i1c
+    outputs: {}
+  - container:
+      args:
+      - -file=/tmp/chaosengine-pod-delete-8ep.yaml
+      - -saveName=/tmp/engine-name
+      image: docker.io/litmuschaos/litmus-checker:2.11.0
+      name: ""
+      resources: {}
+    inputs:
+      artifacts:
+      - name: pod-delete-8ep
+        path: /tmp/chaosengine-pod-delete-8ep.yaml
+        raw:
+          data: |
+            apiVersion: litmuschaos.io/v1alpha1
+            kind: ChaosEngine
+            metadata:
+              namespace: "{{workflow.parameters.adminModeNamespace}}"
+              labels:
+                workflow_run_id: "{{ workflow.uid }}"
+                workflow_name: conference-app
+              annotations:
+                probeRef: '[{"name":"http-conference","mode":"EOT"}]'
+              generateName: pod-delete-8ep
+            spec:
+              appinfo:
+                appns: conference-app
+                applabel: app=c4p-service
+                appkind: deployment
+              engineState: active
+              chaosServiceAccount: litmus-admin
+              experiments:
+                - name: pod-delete
+                  spec:
+                    components:
+                      env:
+                        - name: TOTAL_CHAOS_DURATION
+                          value: "15"
+                        - name: RAMP_TIME
+                          value: ""
+                        - name: FORCE
+                          value: "true"
+                        - name: CHAOS_INTERVAL
+                          value: "5"
+                        - name: PODS_AFFECTED_PERC
+                          value: ""
+                        - name: TARGET_CONTAINER
+                          value: ""
+                        - name: TARGET_PODS
+                          value: ""
+                        - name: DEFAULT_HEALTH_CHECK
+                          value: "false"
+                        - name: NODE_LABEL
+                          value: ""
+                        - name: SEQUENCE
+                          value: parallel
+    metadata:
+      labels:
+        weight: "10"
+    name: pod-delete-8ep
     outputs: {}
 status:
   finishedAt: null
