@@ -242,7 +242,7 @@ spec:
             spec:
               appinfo:
                 appns: conference-app
-                applabel: app=agenda-service
+                applabel: app=c4p-service
                 appkind: deployment
               engineState: active
               chaosServiceAccount: litmus-admin
