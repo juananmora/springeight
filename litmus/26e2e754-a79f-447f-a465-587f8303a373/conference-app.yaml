@@ -274,7 +274,7 @@ spec:
     metadata:
       labels:
         weight: "10"
-    name: pod-delete-i1c
+    name: pod-delete-i1
     outputs: {}
 status:
   finishedAt: null
