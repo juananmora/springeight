@@ -7,6 +7,7 @@ metadata:
     github.com/project-slug: juananmora/springeight
     backstage.io/techdocs-ref: dir:.
     backstage.io/kubernetes-label-selector: app.kubernetes.io/instance=selenium-grid
+    litmuschaos.io/project-id: 26e2e754-a79f-447f-a465-587f8303a373
 spec:
   type: service
   lifecycle: production
