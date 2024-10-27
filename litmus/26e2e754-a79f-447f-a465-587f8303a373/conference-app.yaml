@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     infra_id: 6b4b9936-e228-43ef-904b-6d1bd9260f4b
-    revision_id: 396edec8-8bb1-42cb-b7f7-3411feabd65a
+    revision_id: 7ad2b1ac-f455-41a5-ad41-ffdc0e0be4de
     workflow_id: 76e857c1-5024-4a5c-bf25-a191032b9780
     workflows.argoproj.io/controller-instanceid: 6b4b9936-e228-43ef-904b-6d1bd9260f4b
   name: conference-app
@@ -242,7 +242,7 @@ spec:
             spec:
               appinfo:
                 appns: conference-app
-                applabel: app=c4p-service
+                applabel: app=agenda-service
                 appkind: deployment
               engineState: active
               chaosServiceAccount: litmus-admin
