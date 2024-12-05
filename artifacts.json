@@ -9,7 +9,7 @@
             "artifactVersion": "10.0",
             "repositoryName": "Sabadell",
             "compress": "1",
-            "issueKey": "JON0004"
+            "description": "JON0004"
           }
         },
         {
@@ -18,7 +18,7 @@
             "artifactVersion": "10.0",       
             "repositoryName": "Sabadell",
             "compress": "1",
-            "issueKey": "JON0005"
+            "description": "JON0005"
           }
         },
         {
@@ -27,7 +27,7 @@
             "artifactVersion": "10.0",
             "repositoryName": "Sabadell",
             "compress": "1",
-            "issueKey": "JON0006"
+            "description": "JON0006"
           }
         }
       ]
