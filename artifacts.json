@@ -1,0 +1,36 @@
+{
+  "application": {
+    "name": "ESSAB_BS2CLOUDNEW",
+    "components": {
+      "component": [
+        {
+          "artifact": {
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay",
+            "artifactVersion": "10.0.0",
+            "repositoryName": "Sabadell",
+            "compress": "1",
+            "issueKey": "JON0004"
+          }
+        },
+        {
+          "artifact": {
+            "artifactName": "com.bs.neti:netibs",
+            "artifactVersion": "10.0.1",       
+            "repositoryName": "Sabadell",
+            "compress": "1",
+            "issueKey": "JON0005"
+          }
+        },
+        {
+          "artifact": {
+            "artifactName": "com.optimissa.Iberpay:IntegrationIberpay-conf",
+            "artifactVersion": "10.0.2",
+            "repositoryName": "Sabadell",
+            "compress": "1",
+            "issueKey": "JON0006"
+          }
+        }
+      ]
+    }
+  }
+}
