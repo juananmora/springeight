@@ -4,11 +4,11 @@
     "components": {
       "component": [
         {
-          "name": "micro1", 
+          "name": "Micro 1", 
           "version": "1.0.0"
         },
 		{
-          "name": "micro2", 
+          "name": "Micro 2", 
           "version": "1.0.1"
         }
       ]
