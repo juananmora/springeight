@@ -44,9 +44,10 @@ jobs:
           echo "Consultando componente: $name ($version)"
           echo "JQL: $jql"
           
-          response=$(curl -sS -w "\n%{http_code}" -u "$JIRA_CREDENTIALS" \
+          response=$(curl -sS -w "\n%{http_code}"  \
             "$JIRA_URL?jql=$encoded_jql" \
-            -H "Accept: application/json")
+            -H "Accept: application/json" \
+            -H "Authorization: "$JIRA_CREDENTIALS")
           
           http_code=$(echo "$response" | tail -n1)
           content=$(echo "$response" | sed '$d')
