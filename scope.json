@@ -1,0 +1,17 @@
+{
+  "release": { 
+    "version": "10004",
+    "components": {
+      "component": [
+        {
+          "name": "micro1", 
+          "version": "1.0.0"
+        },
+		{
+          "name": "micro2", 
+          "version": "1.0.1"
+        }
+      ]
+    }
+  }
+}
