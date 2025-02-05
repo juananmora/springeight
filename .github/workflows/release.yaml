@@ -47,7 +47,7 @@ jobs:
           response=$(curl -sS -w "\n%{http_code}"  \
             "$JIRA_URL?jql=$encoded_jql" \
             -H "Accept: application/json" \
-            -H "Authorization: "$JIRA_CREDENTIALS")
+            -H "Authorization: $JIRA_CREDENTIALS")
           
           http_code=$(echo "$response" | tail -n1)
           content=$(echo "$response" | sed '$d')
