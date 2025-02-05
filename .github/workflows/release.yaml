@@ -75,7 +75,7 @@ jobs:
                 issue_code=$(echo "$issue" | awk -F ' - ' '{print $1}')
                 issue_status=$(echo "$issue" | awk -F ' - ' '{print $2}')
                 issue_summary=$(echo "$issue" | awk -F ' - ' '{print $3}')
-            
+               
                 echo "   Código: $issue_code"
                 echo "   Estado: $issue_status"
                 echo "   Resumen: $issue_summary"
