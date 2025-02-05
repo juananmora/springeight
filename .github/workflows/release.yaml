@@ -54,6 +54,7 @@ jobs:
           content=$(echo "$response" | sed '$d')
           echo "Found issues?"
           if [ $http_code -eq 200 ]; then
+            echo "entra"
             echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name)"' | while read issue; do
               echo "Issue: $issue"
             done
