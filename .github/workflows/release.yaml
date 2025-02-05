@@ -2,7 +2,7 @@ name: CI/CD Pipeline
 on: [push, workflow_dispatch]
 
 env:
-  JIRA_URL: https://juananmora.atlassian.net/rest/api/2/search
+  JIRA_URL: https://juananmora.atlassian.net/rest/api/3/search
   JIRA_CREDENTIALS: ${{ secrets.JIRA_CREDENTIALS }}
 
 jobs:
@@ -45,9 +45,10 @@ jobs:
           echo "Checking component: $name ($version)"
           echo "JQL Query: $jql"
           
-          response=$(curl -sS -w "\n%{http_code}" -u "$JIRA_CREDENTIALS" \
+          response=$(curl -sS -w "\n%{http_code}" \
             "$JIRA_URL?jql=$encoded_jQL" \
-            -H "Accept: application/json")
+            -H "Accept: application/json" \
+            -H "Authorization: ${{ secrets.JIRA_CREDENTIALS }}")
           
           http_code=$(echo "$response" | tail -n1)
           content=$(echo "$response" | sed '$d')
