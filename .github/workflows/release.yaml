@@ -50,6 +50,16 @@ jobs:
               -H "Authorization: $JIRA_CREDENTIALS")
           
           http_code=$(echo "$response" | tail -n1)
+
+          if [[ $(echo "$http_code" | awk '$0 == 200 || $0 == 404') ]]; then
+            echo "Respuesta HTTP válida: $http_code"
+            # Procesar la respuesta JSON
+            content=$(echo "$response" | sed '$d')
+            # ... (tu código para procesar $content)
+          else
+            echo "Error: Código de respuesta HTTP no válido: $http_code"
+            exit 1
+          fi
           content=$(echo "$response" | sed '$d')
           
           if [ $http_code -eq 200 ]; then
