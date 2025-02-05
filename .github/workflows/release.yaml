@@ -69,8 +69,16 @@ jobs:
             total_issues=$(echo "$content" | jq '.issues | length')
             if [ "$total_issues" -gt 0 ]; then
               echo "Issues encontrados:"
-              echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name)"' | while read issue; do
+              echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name) - \(.fields.summary)"' | while read issue; do
                 echo " - $issue"
+                # Extraer el código y el estado usando awk o expresiones regulares
+                issue_code=$(echo "$issue" | awk -F ' - ' '{print $1}')
+                issue_status=$(echo "$issue" | awk -F ' - ' '{print $2}')
+                issue_summary=$(echo "$issue" | awk -F ' - ' '{print $3}')
+            
+                echo "   Código: $issue_code"
+                echo "   Estado: $issue_status"
+                echo "   Resumen: $issue_summary"
               done
             else
               echo "✅ No hay issues para este componente"
