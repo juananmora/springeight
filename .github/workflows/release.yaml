@@ -39,7 +39,7 @@ jobs:
           version=$(echo "$component" | jq -r '.version')
           
           # Construir JQL con comillas dobles y encoding correcto
-          jql="project = \"JON\" AND fixVersion = \"Release $release_version\" AND component = \"$name\""
+          jql="project = \"JON\" AND fixVersion = \"$release_version\" AND component = \"$name\""
           encoded_jql=$(printf "%s" "$jql" | jq -sRr @uri | sed 's/%20/+/g')
           
           echo "Checking component: $name ($version)"
