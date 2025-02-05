@@ -1,0 +1,64 @@
+name: CI/CD Pipeline
+on: [push, workflow_dispatch]
+
+env:
+  JIRA_URL: https://juananmora.atlassian.net/rest/api/2/search
+  JIRA_CREDENTIALS: ${{ secrets.JIRA_CREDENTIALS }}
+
+jobs:
+  process-components:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      # Si el repositorio es privado, descomentar:
+      # with:
+      #   token: ${{ secrets.GH_TOKEN }}
+
+    - name: Read Scope File
+      id: read-scope
+      run: |
+        scope=$(cat scope.json)
+        release_version=$(echo $scope | jq -r '.release.version')
+        components=$(echo $scope | jq -r '[.release.components.component[] | {name: .name, version: .version}] | @json')
+        
+        echo "Release Version: $release_version"
+        echo "Components: $components"
+        
+        # Set outputs for next steps
+        echo "release_version=$release_version" >> $GITHUB_OUTPUT
+        echo "components=$components" >> $GITHUB_OUTPUT
+
+    - name: Check Jira Issues
+      run: |
+        components='${{ steps.read-scope.outputs.components }}'
+        release_version='${{ steps.read-scope.outputs.release_version }}'
+        
+        echo "$components" | jq -c '.[]' | while read component; do
+          name=$(echo "$component" | jq -r '.name')
+          version=$(echo "$component" | jq -r '.version')
+          
+          # Construir JQL con comillas dobles y encoding correcto
+          jql="project = \"JON\" AND fixVersion = \"Release $release_version\" AND component = \"$name\""
+          encoded_jql=$(printf "%s" "$jql" | jq -sRr @uri | sed 's/%20/+/g')
+          
+          echo "Checking component: $name ($version)"
+          echo "JQL Query: $jql"
+          
+          response=$(curl -sS -w "\n%{http_code}" -u "$JIRA_CREDENTIALS" \
+            "$JIRA_URL?jql=$encoded_jQL" \
+            -H "Accept: application/json")
+          
+          http_code=$(echo "$response" | tail -n1)
+          content=$(echo "$response" | sed '$d')
+          
+          if [ $http_code -eq 200 ]; then
+            echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name)"' | while read issue; do
+              echo "Issue: $issue"
+            done
+          else
+            echo "Error checking Jira issues (HTTP $http_code)"
+            echo "Response: $content"
+            exit 1
+          fi
+        done
