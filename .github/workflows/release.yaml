@@ -54,13 +54,16 @@ jobs:
           content=$(echo "$response" | sed '$d')
           echo "Found issues?"
           if [ $http_code -eq 200 ]; then
-            echo "entra"
-            echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name)"' | while read issue; do
-              echo "Issue: $issue"
-            done
-          else
-            echo "Error checking Jira issues (HTTP $http_code)"
-            echo "Response: $content"
-            exit 1
-          fi
+            echo "Componente: ${component.name} (${component.version})"
+            
+            # Verificar si hay issues
+            total_issues=$(echo "$content" | jq '.issues | length')
+            if [ "$total_issues" -eq 0 ]; then
+              echo "No se encontraron issues para este componente"
+            else
+              echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name)"' | while read issue; do
+                echo "Issue: $issue"
+              done
+            fi
+
         done
