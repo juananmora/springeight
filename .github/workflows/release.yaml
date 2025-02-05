@@ -65,5 +65,3 @@ jobs:
                 echo "Issue: $issue"
               done
             fi
-
-        done
