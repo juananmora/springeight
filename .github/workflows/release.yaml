@@ -70,7 +70,7 @@ jobs:
             if [ "$total_issues" -gt 0 ]; then
               echo "Issues encontrados:"
               echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name) - \(.fields.summary)"' | while read issue; do
-                echo " - $issue"
+                #echo " - $issue"
                 # Extraer el código y el estado usando awk o expresiones regulares
                 issue_code=$(echo "$issue" | awk -F ' - ' '{print $1}')
                 issue_status=$(echo "$issue" | awk -F ' - ' '{print $2}')
