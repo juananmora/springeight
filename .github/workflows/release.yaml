@@ -46,8 +46,9 @@ jobs:
           
           response=$(curl -sS -w "\n%{http_code}"  \
             "$JIRA_URL?jql=$encoded_jql" \
-            -H "Accept: application/json" \
-            -H "Authorization: $JIRA_CREDENTIALS")
+            -H "Accept": "application/json" \
+            -H "Authorization": "$JIRA_CREDENTIALS" \
+            -H "Cookie": "atlassian.xsrf.token=2abe4e90b04d0e0d853e35e8812a2cb24cc6d0a5_lin")
           
           http_code=$(echo "$response" | tail -n1)
           content=$(echo "$response" | sed '$d')
