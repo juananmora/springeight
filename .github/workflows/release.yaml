@@ -38,31 +38,39 @@ jobs:
           name=$(echo "$component" | jq -r '.name')
           version=$(echo "$component" | jq -r '.version')
           
-          # Construir JQL con comillas dobles y encoding correcto
           jql="project = \"JON\" AND fixVersion = \"$release_version\" AND component = \"$name\""
           encoded_jql=$(printf "%s" "$jql" | jq -sRr @uri | sed 's/%20/+/g')
           
-          echo "Checking component: $name ($version)"
-          echo "JQL Query: $jql"
+          echo "Consultando componente: $name ($version)"
+          echo "JQL: $jql"
           
-          response=$(curl -sS -w "\n%{http_code}" \
-            "$JIRA_URL?jql=$encoded_jQL" \
-            -H "Accept: application/json" \
-            -H "Authorization: ${{ secrets.JIRA_CREDENTIALS }}")
+          response=$(curl -sS -w "\n%{http_code}" -u "$JIRA_CREDENTIALS" \
+            "$JIRA_URL?jql=$encoded_jql" \
+            -H "Accept: application/json")
           
           http_code=$(echo "$response" | tail -n1)
           content=$(echo "$response" | sed '$d')
-          echo "Found issues?"
+          
           if [ $http_code -eq 200 ]; then
-            echo "Componente: ${component.name} (${component.version})"
+            echo "=== Respuesta JSON ==="
+            echo "$content" | jq .  # Debug: Mostrar estructura completa
             
-            # Verificar si hay issues
             total_issues=$(echo "$content" | jq '.issues | length')
-            if [ "$total_issues" -eq 0 ]; then
-              echo "No se encontraron issues para este componente"
-            else
+            if [ "$total_issues" -gt 0 ]; then
+              echo "Issues encontrados:"
               echo "$content" | jq -r '.issues[] | "\(.key) - \(.fields.status.name)"' | while read issue; do
-                echo "Issue: $issue"
+                echo " - $issue"
               done
+            else
+              echo "✅ No hay issues para este componente"
             fi
+            
+          else
+            echo "❌ Error HTTP $http_code"
+            echo "Respuesta del servidor:"
+            echo "$content"
+            exit 1
+          fi
+          echo "------------------------------------"
         done
+
