@@ -37,7 +37,7 @@ jobs:
             REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
             echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH"
             # Disparar el workflow de despliegue
-            curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
+            curl -s -X POST "https://api.github.com/repos/accenture-springfour/actions/workflows/deploy.yml/dispatches" \
               -H "Accept: application/vnd.github.v3+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               -d "{\"ref\":\"main\", \"inputs\": {\"version\": \"$VERSION\"}}"
