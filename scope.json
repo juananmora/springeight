@@ -2,17 +2,17 @@
   "release": {
     "version": "Release v1.0.0",
     "testing": {
-      "development": {
+      "Desenvolupament": {
         "FUNCIONAL": true,
         "RENDIMENT": false,
         "API": true
       },
-      "preproduction": {
+      "Preproduccio": {
         "FUNCTIONAL": true,
         "RENDIMENT": true,
         "API": true
       },
-      "production": {
+      "Produccio": {
         "FUNCTIONAL": false,
         "RENDIMENT": true,
         "API": true
