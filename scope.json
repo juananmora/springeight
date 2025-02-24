@@ -5,13 +5,16 @@
       "component": [
         {
           "name": "Micro 1", 
-          "version": "1.0.0"
+          "version": "1.0.0",
+          "repo": "https://api.github.com/repos/juananmora/micro1/git/refs/tags/"
         },
-		{
+        {
           "name": "Micro 2", 
-          "version": "1.0.1"
+          "version": "1.0.1",
+          "repo": "https://api.github.com/repos/juananmora/micro2/git/refs/tags/"
         }
       ]
     }
   }
 }
+
