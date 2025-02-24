@@ -9,9 +9,9 @@
           "repo": "https://api.github.com/repos/juananmora/accenture-springtwo/git/refs/tags/"
         },
         {
-          "name": "accenture-springtwo", 
-          "version": "1.0.2",
-          "repo": "https://api.github.com/repos/juananmora/accenture-springtwo/git/refs/tags/"
+          "name": "accenture-springfour", 
+          "version": "1.0.1",
+          "repo": "https://api.github.com/repos/juananmora/accenture-springfour/git/refs/tags/"
         }
       ]
     }
