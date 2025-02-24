@@ -31,7 +31,7 @@ jobs:
 
             # Obtener el SHA del último commit de la rama
             COMMIT_SHA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-              "https://api.github.com/repos/$REPO_PATH/branches/$BRANCH_NAME" \
+              "https://api.github.com/repos/$NAME/branches/$BRANCH_NAME" \
               | jq -r '.commit.sha')
 
             if [ "$COMMIT_SHA" == "null" ]; then
