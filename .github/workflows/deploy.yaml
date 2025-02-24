@@ -1,0 +1,98 @@
+name: Deploy Components
+
+on:
+  workflow_dispatch:  # Se puede lanzar manualmente desde GitHub Actions
+
+jobs:
+  read-scope-and-trigger:
+    runs-on: ubuntu-latest
+    outputs:
+      component_results: ${{ steps.collect_results.outputs.results }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read scope.json
+        id: parse_json
+        run: |
+          COMPONENTS=$(jq -c '.release.components.component[]' scope.json)
+          echo "COMPONENTS=$COMPONENTS" >> $GITHUB_ENV
+
+      - name: Trigger Deploy Workflows
+        id: trigger_workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Token para autenticación en GitHub API
+        run: |
+          echo "Leyendo componentes y lanzando despliegues..."
+          DEPLOYMENT_IDS=()
+          
+          for component in $(echo $COMPONENTS | jq -c '.'); do
+            NAME=$(echo $component | jq -r '.name')
+            VERSION=$(echo $component | jq -r '.version')
+            REPO_URL=$(echo $component | jq -r '.repo')
+
+            # Extraer usuario y repositorio de la URL
+            REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
+
+            echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH"
+
+            # Disparar el workflow de despliegue
+            RESPONSE=$(curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -d "{\"ref\":\"main\", \"inputs\": {\"version\": \"$VERSION\"}}")
+
+            echo "Despliegue lanzado: $RESPONSE"
+            
+            # Guardar la ID del workflow run para monitorear el estado
+            RUN_ID=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+              "https://api.github.com/repos/$REPO_PATH/actions/runs?event=workflow_dispatch" \
+              | jq -r '.workflow_runs[0].id')
+
+            echo "Run ID para $NAME: $RUN_ID"
+            DEPLOYMENT_IDS+=("$RUN_ID|$REPO_PATH")
+          done
+
+          echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
+
+      - name: Wait for Deployments
+        id: check_status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🕐 Esperando que todos los despliegues finalicen..."
+          all_success=true
+
+          for entry in ${DEPLOYMENT_IDS[@]}; do
+            IFS="|" read -r RUN_ID REPO_PATH <<< "$entry"
+            
+            STATUS="in_progress"
+            while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
+              sleep 10
+              STATUS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+                "https://api.github.com/repos/$REPO_PATH/actions/runs/$RUN_ID" \
+                | jq -r '.status')
+
+              echo "🔄 Estado de $REPO_PATH ($RUN_ID): $STATUS"
+            done
+
+            CONCLUSION=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+              "https://api.github.com/repos/$REPO_PATH/actions/runs/$RUN_ID" \
+              | jq -r '.conclusion')
+
+            echo "✔️ Resultado final de $REPO_PATH: $CONCLUSION"
+
+            if [[ "$CONCLUSION" != "success" ]]; then
+              all_success=false
+            fi
+          done
+
+          echo "all_success=$all_success" >> $GITHUB_ENV
+
+  finalize:
+    needs: read-scope-and-trigger
+    if: env.all_success == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello World
+        run: echo "🎉 ¡Hola Mundo! Todos los despliegues fueron exitosos."
