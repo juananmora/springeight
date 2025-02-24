@@ -35,7 +35,7 @@ jobs:
               | jq -r '.commit.sha')
 
             if [ "$COMMIT_SHA" == "null" ]; then
-              echo "No se pudo obtener el SHA del commit para la rama $BRANCH_NAME en el repositorio $REPO_PATH"
+              echo "No se pudo obtener el SHA del commit para la rama $BRANCH_NAME en el repositorio https://api.github.com/repos/$NAME/branches/$BRANCH_NAME"
               exit 1
             fi
 
