@@ -33,9 +33,13 @@ jobs:
             NAME=$(echo $component | jq -r '.name')
             VERSION=$(echo $component | jq -r '.version')
             REPO_URL=$(echo $component | jq -r '.repo')
-            # Extraer usuario y repositorio de la URL
             REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
-            echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH"
+      
+            # Aquí puedes modificar la rama de despliegue según sea necesario
+            BRANCH_NAME="main"  # Cambiar por el nombre de la rama que utilices
+      
+            echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH en la rama $BRANCH_NAME"
+
             # Disparar el workflow de despliegue
             curl -s -X POST "https://api.github.com/repos/accenture-springfour/actions/workflows/deploy.yml/dispatches" \
               -H "Accept: application/vnd.github.v3+json" \
@@ -50,34 +54,36 @@ jobs:
           done < <(echo "$COMPONENTS")
           echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
 
-      - name: Wait for Deployments
-        id: check_status
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Wait for Deployments to Finish
+        id: wait_for_deployments
         run: |
           echo "🕐 Esperando que todos los despliegues finalicen..."
           all_success=true
-          for entry in ${DEPLOYMENT_IDS[@]}; do
-            IFS="|" read -r RUN_ID REPO_PATH <<< "$entry"
-            
+      
+          for entry in "${DEPLOYMENT_IDS[@]}"; do
+            IFS="|" read -r REPO_PATH DEPLOYMENT_ID <<< "$entry"
+      
             STATUS="in_progress"
             while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
               sleep 10
               STATUS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-                "https://api.github.com/repos/$REPO_PATH/actions/runs/$RUN_ID" \
+                "https://api.github.com/repos/$REPO_PATH/actions/runs/$DEPLOYMENT_ID" \
                 | jq -r '.status')
-              echo "🔄 Estado de $REPO_PATH ($RUN_ID): $STATUS"
+              echo "🔄 Estado de $REPO_PATH: $STATUS"
             done
+      
             CONCLUSION=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-              "https://api.github.com/repos/$REPO_PATH/actions/runs/$RUN_ID" \
+              "https://api.github.com/repos/$REPO_PATH/actions/runs/$DEPLOYMENT_ID" \
               | jq -r '.conclusion')
             echo "✔️ Resultado final de $REPO_PATH: $CONCLUSION"
+            
             if [[ "$CONCLUSION" != "success" ]]; then
               all_success=false
             fi
           done
+      
           echo "all_success=$all_success" >> $GITHUB_ENV
-          echo "::set-output name=all_success::$all_success"
+
 
   finalize:
     needs: read-scope-and-trigger
