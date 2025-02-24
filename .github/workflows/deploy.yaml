@@ -27,7 +27,7 @@ jobs:
             REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
 
             # Aquí puedes modificar la rama de despliegue según sea necesario
-            BRANCH_NAME="main"  # Cambiar por el nombre de la rama que utilices
+            BRANCH_NAME="master"  # Cambiar por el nombre de la rama que utilices
 
             # Obtener el SHA del último commit de la rama
             COMMIT_SHA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
