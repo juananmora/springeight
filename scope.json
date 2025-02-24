@@ -21,24 +21,14 @@
     "components": {
       "component": [
         {
-          "name": "accenture-springtwo",
+          "name": "accenture-springtwo", 
           "version": "1.0.2",
-          "repo": "juananmora/accenture-springtwo",
-          "test_scope": {
-            "test_environment": true,
-            "preproduction": true,
-            "production": false
-          }
+          "repo": "https://api.github.com/repos/juananmora/accenture-springtwo/git/refs/tags/"
         },
         {
-          "name": "accenture-springfour",
+          "name": "accenture-springfour", 
           "version": "1.0.1",
-          "repo": "juananmora/accenture-springfour",
-          "test_scope": {
-            "test_environment": true,
-            "preproduction": false,
-            "production": true
-          }
+          "repo": "https://api.github.com/repos/juananmora/accenture-springfour/git/refs/tags/"
         }
       ]
     }
