@@ -15,8 +15,11 @@ jobs:
       - name: Read scope.json
         id: parse_json
         run: |
-          COMPONENTS=$(jq -c '.release.components.component[]' scope.json)
-          echo "COMPONENTS=$COMPONENTS" >> $GITHUB_ENV
+          echo "Leyendo scope.json..."
+          echo "COMPONENTS<<EOF" >> $GITHUB_ENV
+          jq -c '.release.components.component[]' scope.json >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
 
       - name: Trigger Deploy Workflows
         id: trigger_workflows
@@ -26,7 +29,7 @@ jobs:
           echo "Leyendo componentes y lanzando despliegues..."
           DEPLOYMENT_IDS=()
           
-          for component in $(echo $COMPONENTS | jq -c '.'); do
+          while IFS= read -r component; do
             NAME=$(echo $component | jq -r '.name')
             VERSION=$(echo $component | jq -r '.version')
             REPO_URL=$(echo $component | jq -r '.repo')
@@ -44,7 +47,7 @@ jobs:
               | jq -r '.workflow_runs[0].id')
             echo "Run ID para $NAME: $RUN_ID"
             DEPLOYMENT_IDS+=("$RUN_ID|$REPO_PATH")
-          done
+          done < <(echo "$COMPONENTS")
           echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
 
       - name: Wait for Deployments
