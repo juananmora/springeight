@@ -8,12 +8,12 @@
         "API": true
       },
       "Preproduccio": {
-        "FUNCTIONAL": true,
+        "FUNCIONAL": true,
         "RENDIMENT": true,
         "API": true
       },
       "Produccio": {
-        "FUNCTIONAL": false,
+        "FUNCIONAL": false,
         "RENDIMENT": true,
         "API": true
       }
