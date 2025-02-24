@@ -4,9 +4,9 @@
     "components": {
       "component": [
         {
-          "name": "accenture-springone", 
+          "name": "accenture-springfour", 
           "version": "1.0.1",
-          "repo": "https://api.github.com/repos/juananmora/accenture-springone/git/refs/tags/"
+          "repo": "https://api.github.com/repos/juananmora/accenture-springfour/git/refs/tags/"
         },
         {
           "name": "accenture-springtwo", 
