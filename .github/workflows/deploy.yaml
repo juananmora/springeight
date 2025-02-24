@@ -30,27 +30,21 @@ jobs:
             NAME=$(echo $component | jq -r '.name')
             VERSION=$(echo $component | jq -r '.version')
             REPO_URL=$(echo $component | jq -r '.repo')
-
             # Extraer usuario y repositorio de la URL
             REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
-
             echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH"
-
             # Disparar el workflow de despliegue
             curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
               -H "Accept: application/vnd.github.v3+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               -d "{\"ref\":\"main\", \"inputs\": {\"version\": \"$VERSION\"}}"
-
             # Obtener el último workflow run ID
             RUN_ID=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
               "https://api.github.com/repos/$REPO_PATH/actions/runs?event=workflow_dispatch" \
               | jq -r '.workflow_runs[0].id')
-
             echo "Run ID para $NAME: $RUN_ID"
             DEPLOYMENT_IDS+=("$RUN_ID|$REPO_PATH")
           done
-
           echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
 
       - name: Wait for Deployments
@@ -60,7 +54,6 @@ jobs:
         run: |
           echo "🕐 Esperando que todos los despliegues finalicen..."
           all_success=true
-
           for entry in ${DEPLOYMENT_IDS[@]}; do
             IFS="|" read -r RUN_ID REPO_PATH <<< "$entry"
             
@@ -70,27 +63,22 @@ jobs:
               STATUS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
                 "https://api.github.com/repos/$REPO_PATH/actions/runs/$RUN_ID" \
                 | jq -r '.status')
-
               echo "🔄 Estado de $REPO_PATH ($RUN_ID): $STATUS"
             done
-
             CONCLUSION=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
               "https://api.github.com/repos/$REPO_PATH/actions/runs/$RUN_ID" \
               | jq -r '.conclusion')
-
             echo "✔️ Resultado final de $REPO_PATH: $CONCLUSION"
-
             if [[ "$CONCLUSION" != "success" ]]; then
               all_success=false
             fi
           done
-
           echo "all_success=$all_success" >> $GITHUB_ENV
           echo "::set-output name=all_success::$all_success"
 
   finalize:
     needs: read-scope-and-trigger
-    if: needs.read-scope-and-trigger.outputs.all_success == 'true'
+    if: ${{ needs.read-scope-and-trigger.outputs.all_success == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Say Hello World
