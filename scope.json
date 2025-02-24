@@ -14,7 +14,7 @@
       },
       "Produccio": {
         "FUNCIONAL": false,
-        "RENDIMENT": true,
+        "RENDIMENT": false,
         "API": true
       }
     },
