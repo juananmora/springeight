@@ -4,7 +4,7 @@
     "components": {
       "component": [
         {
-          "name": accenture-springone", 
+          "name": "accenture-springone", 
           "version": "1.0.0",
           "repo": "https://api.github.com/repos/juananmora/accenture-springone/git/refs/tags/"
         },
