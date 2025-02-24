@@ -4,14 +4,14 @@
     "components": {
       "component": [
         {
-          "name": "Micro 1", 
+          "name": accenture-springone", 
           "version": "1.0.0",
-          "repo": "https://api.github.com/repos/juananmora/micro1/git/refs/tags/"
+          "repo": "https://api.github.com/repos/juananmora/accenture-springone/git/refs/tags/"
         },
         {
-          "name": "Micro 2", 
-          "version": "1.0.1",
-          "repo": "https://api.github.com/repos/juananmora/micro2/git/refs/tags/"
+          "name": "accenture-springtwo", 
+          "version": "1.0.2",
+          "repo": "https://api.github.com/repos/juananmora/accenture-springtwo/git/refs/tags/"
         }
       ]
     }
