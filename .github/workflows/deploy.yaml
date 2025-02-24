@@ -31,18 +31,18 @@ jobs:
 
             # Obtener el SHA del último commit de la rama
             COMMIT_SHA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-              "https://api.github.com/repos/$NAME/branches/$BRANCH_NAME" \
+              "https://api.github.com/repos/juananmora/$NAME/branches/$BRANCH_NAME" \
               | jq -r '.commit.sha')
 
             if [ "$COMMIT_SHA" == "null" ]; then
-              echo "No se pudo obtener el SHA del commit para la rama $BRANCH_NAME en el repositorio https://api.github.com/repos/$NAME/branches/$BRANCH_NAME"
+              echo "No se pudo obtener el SHA del commit para la rama $BRANCH_NAME en el repositorio https://api.github.com/repos/juananmora/$NAME/branches/$BRANCH_NAME"
               exit 1
             fi
 
             echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH en la rama $BRANCH_NAME (SHA: $COMMIT_SHA)"
 
             # Llamada API para disparar el workflow de despliegue usando el SHA
-            DEPLOYMENT_ID=$(curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
+            DEPLOYMENT_ID=$(curl -s -X POST "https://api.github.com/repos/juananmora/$NAME/actions/workflows/deploy.yml/dispatches" \
               -H "Accept: application/vnd.github.v3+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               -d "{\"ref\":\"$COMMIT_SHA\", \"inputs\": {\"version\": \"$VERSION\"}}")
@@ -69,7 +69,7 @@ jobs:
             while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
               sleep 10
               STATUS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-                "https://api.github.com/repos/$REPO_PATH/actions/runs/$DEPLOYMENT_ID" \
+                "https://api.github.com/repos/juananmora/$NAME/actions/runs/$DEPLOYMENT_ID" \
                 | jq -r '.status')
               echo "🔄 Estado de $REPO_PATH: $STATUS"
             done
