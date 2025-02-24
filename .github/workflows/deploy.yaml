@@ -40,17 +40,15 @@ jobs:
       
             echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH en la rama $BRANCH_NAME"
 
-            # Disparar el workflow de despliegue
-            curl -s -X POST "https://api.github.com/repos/accenture-springfour/actions/workflows/deploy.yml/dispatches" \
+            DEPLOYMENT_ID=$(curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
               -H "Accept: application/vnd.github.v3+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
-              -d "{\"ref\":\"main\", \"inputs\": {\"version\": \"$VERSION\"}}"
-            # Obtener el último workflow run ID
-            RUN_ID=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-              "https://api.github.com/repos/$REPO_PATH/actions/runs?event=workflow_dispatch" \
-              | jq -r '.workflow_runs[0].id')
-            echo "Run ID para $NAME: $RUN_ID"
-            DEPLOYMENT_IDS+=("$RUN_ID|$REPO_PATH")
+              -d "{\"ref\":\"$BRANCH_NAME\", \"inputs\": {\"version\": \"$VERSION\"}}")
+      
+            echo "Disparado despliegue para $NAME, estado: $DEPLOYMENT_ID"
+            DEPLOYMENT_IDS+=("$REPO_PATH|$DEPLOYMENT_ID")
+      
+
           done < <(echo "$COMPONENTS")
           echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
 
