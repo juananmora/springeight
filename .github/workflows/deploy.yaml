@@ -1,86 +1,75 @@
-name: Deploy Components
-
-on:
-  workflow_dispatch:
-
-jobs:
-  read-scope-and-trigger:
-    runs-on: ubuntu-latest
-    outputs:
-      all_success: ${{ steps.check_status.outputs.all_success }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Read scope.json
-        id: parse_json
-        run: |
-          echo "Leyendo scope.json..."
-          echo "COMPONENTS<<EOF" >> $GITHUB_ENV
-          jq -c '.release.components.component[]' scope.json >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-
-      - name: Trigger Deploy Workflows
-        id: trigger_workflows
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Leyendo componentes y lanzando despliegues..."
-          DEPLOYMENT_IDS=()
+    - name: Read scope.json and Trigger Deployments
+      id: read_and_trigger
+      run: |
+        echo "Leyendo scope.json..."
+        COMPONENTS=$(jq -c '.release.components.component[]' scope.json)
+        echo "Leyendo y lanzando despliegues para cada componente..."
+    
+        for component in $(echo "$COMPONENTS" | jq -c '.'); do
+          NAME=$(echo $component | jq -r '.name')
+          VERSION=$(echo $component | jq -r '.version')
+          REPO_URL=$(echo $component | jq -r '.repo')
+          REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
+    
+          # Aquí puedes modificar la rama de despliegue según sea necesario
+          BRANCH_NAME="main"  # Cambiar por el nombre de la rama que utilices
+    
+          # Obtener el SHA del último commit de la rama
+          COMMIT_SHA=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO_PATH/branches/$BRANCH_NAME" \
+            | jq -r '.commit.sha')
+    
+          if [ "$COMMIT_SHA" == "null" ]; then
+            echo "No se pudo obtener el SHA del commit para la rama $BRANCH_NAME en el repositorio $REPO_PATH"
+            exit 1
+          fi
+    
+          echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH en la rama $BRANCH_NAME (SHA: $COMMIT_SHA)"
+    
+          # Llamada API para disparar el workflow de despliegue usando el SHA
+          DEPLOYMENT_ID=$(curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -d "{\"ref\":\"$COMMIT_SHA\", \"inputs\": {\"version\": \"$VERSION\"}}")
+    
+          echo "Disparado despliegue para $NAME, estado: $DEPLOYMENT_ID"
           
-          while IFS= read -r component; do
-            NAME=$(echo $component | jq -r '.name')
-            VERSION=$(echo $component | jq -r '.version')
-            REPO_URL=$(echo $component | jq -r '.repo')
-            REPO_PATH=$(echo $REPO_URL | sed -E 's|https://api.github.com/repos/||')
-      
-            # Aquí puedes modificar la rama de despliegue según sea necesario
-            BRANCH_NAME="main"  # Cambiar por el nombre de la rama que utilices
-      
-            echo "🚀 Lanzando despliegue para $NAME (Versión: $VERSION) en $REPO_PATH en la rama $BRANCH_NAME"
+          # Agregar ID del despliegue al array para hacer seguimiento
+          DEPLOYMENT_IDS+=("$REPO_PATH|$DEPLOYMENT_ID")
+        done
+    
+        echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
 
-            DEPLOYMENT_ID=$(curl -s -X POST "https://api.github.com/repos/$REPO_PATH/actions/workflows/deploy.yml/dispatches" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -d "{\"ref\":\"$BRANCH_NAME\", \"inputs\": {\"version\": \"$VERSION\"}}")
-      
-            echo "Disparado despliegue para $NAME, estado: $DEPLOYMENT_ID"
-            DEPLOYMENT_IDS+=("$REPO_PATH|$DEPLOYMENT_ID")
-      
 
-          done < <(echo "$COMPONENTS")
-          echo "DEPLOYMENT_IDS=${DEPLOYMENT_IDS[@]}" >> $GITHUB_ENV
-
-      - name: Wait for Deployments to Finish
-        id: wait_for_deployments
-        run: |
-          echo "🕐 Esperando que todos los despliegues finalicen..."
-          all_success=true
-      
-          for entry in "${DEPLOYMENT_IDS[@]}"; do
-            IFS="|" read -r REPO_PATH DEPLOYMENT_ID <<< "$entry"
-      
-            STATUS="in_progress"
-            while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
-              sleep 10
-              STATUS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
-                "https://api.github.com/repos/$REPO_PATH/actions/runs/$DEPLOYMENT_ID" \
-                | jq -r '.status')
-              echo "🔄 Estado de $REPO_PATH: $STATUS"
-            done
-      
-            CONCLUSION=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+    - name: Wait for Deployments to Finish
+      id: wait_for_deployments
+      run: |
+        echo "🕐 Esperando que todos los despliegues finalicen..."
+        all_success=true
+    
+        for entry in "${DEPLOYMENT_IDS[@]}"; do
+          IFS="|" read -r REPO_PATH DEPLOYMENT_ID <<< "$entry"
+    
+          STATUS="in_progress"
+          while [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; do
+            sleep 10
+            STATUS=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
               "https://api.github.com/repos/$REPO_PATH/actions/runs/$DEPLOYMENT_ID" \
-              | jq -r '.conclusion')
-            echo "✔️ Resultado final de $REPO_PATH: $CONCLUSION"
-            
-            if [[ "$CONCLUSION" != "success" ]]; then
-              all_success=false
-            fi
+              | jq -r '.status')
+            echo "🔄 Estado de $REPO_PATH: $STATUS"
           done
-      
-          echo "all_success=$all_success" >> $GITHUB_ENV
+    
+          CONCLUSION=$(curl -s -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO_PATH/actions/runs/$DEPLOYMENT_ID" \
+            | jq -r '.conclusion')
+          echo "✔️ Resultado final de $REPO_PATH: $CONCLUSION"
+          
+          if [[ "$CONCLUSION" != "success" ]]; then
+            all_success=false
+          fi
+        done
+    
+        echo "all_success=$all_success" >> $GITHUB_ENV
 
 
   finalize:
