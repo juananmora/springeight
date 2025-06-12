@@ -12,11 +12,10 @@ jobs:
 
       - name: Run AI Inference Action
         id: inference
-        uses: ./
+        uses: actions/ai-inference@v1
         with:
+          prompt: "Resume el contenido del fichero por favor"
           prompt-file: './README.md'
-          model: 'openai/gpt-4o'
-          max-tokens: '200'
 
       - name: Write summary with AI response
         run: |
