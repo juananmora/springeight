@@ -42,5 +42,5 @@ jobs:
             --- FIN DEL CONTENIDO ---
       - name: Write summary with AI response
         run: |
-          echo "## Resumen AI del contenido de test.md:" >> $GITHUB_STEP_SUMMARY
+          echo "## Resumen AI del contenido de junit-results.xml:" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.inference.outputs.response }}" >> $GITHUB_STEP_SUMMARY
