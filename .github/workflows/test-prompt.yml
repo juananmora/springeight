@@ -10,11 +10,9 @@ jobs:
       - name: Read README content
         id: readme
         run: |
-          if [ -f "junit-results.xml" ]; then
-            echo "README_CONTENT<<EOF" >> $GITHUB_OUTPUT
-            cat junit-results.xml >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-          else
+      - name: Set GITHUB_OUTPUT
+        run: |
+          if [ ! -f junit-results.xml ]; then
             echo "README_CONTENT=No se encontró el archivo junit-results.xml" >> $GITHUB_OUTPUT
           fi
       - name: Run AI Inference Action
