@@ -31,7 +31,7 @@ jobs:
         id: inference
         uses: actions/ai-inference@v1
         with:
-          model: "gpt-3.5-turbo"
+          model: "openai/gpt-4.1"
           max-tokens: 4000
           system-prompt: |
             Eres un experto en testing y desarrollo de software. Analiza los resultados de pruebas JUnit para proporcionar un resumen claro y útil.
