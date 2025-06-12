@@ -10,10 +10,10 @@ jobs:
       - name: Set GITHUB_OUTPUT
         id: readme
         run: |
-          if [ -f "junit-results.xml" ]; then
+          if [ -f "test-results/junit-results.xml" ]; then
             {
               echo "README_CONTENT<<DELIMITER"
-              cat junit-results.xml
+              cat test-results/junit-results.xml
               echo "DELIMITER"
             } >> $GITHUB_OUTPUT
           else
