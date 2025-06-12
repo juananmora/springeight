@@ -1,22 +1,18 @@
 name: Test Prompt
-
 on:
   workflow_dispatch:
-
 jobs:
   ai-inference:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
       - name: Run AI Inference Action
         id: inference
         uses: actions/ai-inference@v1
         with:
           prompt: "Resume el contenido del fichero por favor"
           prompt-file: './README.md'
-
       - name: Write summary with AI response
         run: |
           echo "## Resumen AI del contenido de README.md:" >> $GITHUB_STEP_SUMMARY
