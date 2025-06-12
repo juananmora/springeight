@@ -17,7 +17,8 @@ jobs:
         id: inference
         uses: actions/ai-inference@v1
         with:
-          prompt: 'Hello! resumne el contenido del fichero README.md'
+          prompt: 'Hello! resumne el contenido del fichero'
+          prompt-file: './README.md'
 
       - name: Print Output
         id: output
