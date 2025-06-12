@@ -2,7 +2,13 @@ name: 'AI inference'
 on: workflow_dispatch
 
 jobs:
+  read-scope-and-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
   inference:
+    needs: read-scope-and-trigger
     permissions:
       models: read
     runs-on: ubuntu-latest
