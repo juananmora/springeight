@@ -21,6 +21,9 @@ jobs:
         id: inference
         uses: actions/ai-inference@v1
         with:
+          max-tokens: 4000
+          system-prompt: |
+            Eres un experto en desarrollo de software y estás ayudando a un nuevo desarrollador a comprender un proyecto. Utiliza el contenido del README.md para proporcionar un resumen claro y conciso.
           prompt: |
             Por favor, analiza el siguiente contenido del archivo README.md y proporciona un resumen conciso que incluya:
 
