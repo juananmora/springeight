@@ -1,0 +1,100 @@
+<testsuites id="" name="" tests="6" failures="0" skipped="0" errors="0" time="24.001433999999996">
+<testsuite name="bbva-navegacion.spec.ts" timestamp="2025-06-12T13:57:40.390Z" hostname="chromium" tests="1" failures="0" skipped="0" time="18.994" errors="0">
+<testcase name="BBVA Website Navigation › Navegar a BBVA personas y hacer clic en &quot;Hazte de BBVA&quot;" classname="bbva-navegacion.spec.ts" time="18.994">
+<system-out>
+<![CDATA[✓ Navegación exitosa a BBVA personas
+✓ Botón de cookies encontrado: button:has-text("Aceptar")
+✓ Cookies aceptadas exitosamente
+✓ Elemento "Hazte de BBVA" encontrado: a[href*="hazte-cliente"]
+✓ Clic en "Hazte de BBVA" ejecutado exitosamente
+✓ URL actual: https://www.bbva.es/general/hazte-cliente/abrir-cuenta-bancaria-online.html
+✓ URL confirma navegación a proceso "Hazte de BBVA"
+✅ Test completado: Navegación BBVA ejecutada exitosamente
+
+[[ATTACHMENT|bbva-navegacion-BBVA-Websi-c068e-acer-clic-en-Hazte-de-BBVA--chromium\test-finished-1.png]]
+
+[[ATTACHMENT|bbva-navegacion-BBVA-Websi-c068e-acer-clic-en-Hazte-de-BBVA--chromium\video.webm]]
+
+[[ATTACHMENT|bbva-navegacion-BBVA-Websi-c068e-acer-clic-en-Hazte-de-BBVA--chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="employee-management-jon1.spec.ts" timestamp="2025-06-12T13:57:40.390Z" hostname="chromium" tests="1" failures="0" skipped="0" time="13.98" errors="0">
+<testcase name="Employee Management System - MCP Playwright Test › Navigate, login, and create new employee with CLevel grade" classname="employee-management-jon1.spec.ts" time="13.98">
+<system-out>
+<![CDATA[✅ Step 1: Successfully navigated to http://eaapp.somee.com
+✅ Step 2: Successfully clicked login link
+✅ Step 3: Successfully logged in with admin credentials
+✅ Step 4: Successfully navigated to Employee List page
+✅ Step 5: Successfully clicked Create New button
+✅ Step 6: Successfully filled employee form with realistic details
+   - Name: John Michael Thompson
+   - Salary: 125000
+   - Duration Worked: 8 years
+   - Grade: CLevel
+   - Email: john.thompson@corporation.com
+✅ Step 7-8: Successfully created employee and verified in employee list
+✅ Step 9: Successfully closed the browser
+🎉 Test completed successfully! Employee "John Michael Thompson" created with CLevel grade.
+
+[[ATTACHMENT|employee-management-jon1-E-cab2d--employee-with-CLevel-grade-chromium\video.webm]]
+
+[[ATTACHMENT|employee-management-jon1-E-cab2d--employee-with-CLevel-grade-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|employee-management-jon1-E-cab2d--employee-with-CLevel-grade-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="example.spec.ts" timestamp="2025-06-12T13:57:40.390Z" hostname="chromium" tests="2" failures="0" skipped="0" time="19.03" errors="0">
+<testcase name="has title" classname="example.spec.ts" time="8.418">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|example-has-title-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|example-has-title-chromium\video.webm]]
+
+[[ATTACHMENT|example-has-title-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+<testcase name="get started link" classname="example.spec.ts" time="10.612">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|example-get-started-link-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|example-get-started-link-chromium\video.webm]]
+
+[[ATTACHMENT|example-get-started-link-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="tc001-agregar-elementos-todo.spec.ts" timestamp="2025-06-12T13:57:40.390Z" hostname="chromium" tests="1" failures="0" skipped="0" time="6.444" errors="0">
+<testcase name="TC-001: Agregar elementos TODO individuales › Verificar que se pueden agregar tareas TODO correctamente" classname="tc001-agregar-elementos-todo.spec.ts" time="6.444">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|tc001-agregar-elementos-to-039d7-r-tareas-TODO-correctamente-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|tc001-agregar-elementos-to-039d7-r-tareas-TODO-correctamente-chromium\video.webm]]
+
+[[ATTACHMENT|tc001-agregar-elementos-to-039d7-r-tareas-TODO-correctamente-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+<testsuite name="tc002-limpiar-campo-entrada.spec.ts" timestamp="2025-06-12T13:57:40.390Z" hostname="chromium" tests="1" failures="0" skipped="0" time="7.322" errors="0">
+<testcase name="TC-002: Limpiar campo de entrada después de agregar › Verificar que el campo de entrada se limpia automáticamente" classname="tc002-limpiar-campo-entrada.spec.ts" time="7.322">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|tc002-limpiar-campo-entrad-35d0a-a-se-limpia-automáticamente-chromium\test-finished-1.png]]
+
+[[ATTACHMENT|tc002-limpiar-campo-entrad-35d0a-a-se-limpia-automáticamente-chromium\video.webm]]
+
+[[ATTACHMENT|tc002-limpiar-campo-entrad-35d0a-a-se-limpia-automáticamente-chromium\trace.zip]]
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
