@@ -1,9 +1,17 @@
 name: Test Prompt
 on:
   workflow_dispatch:
+    inputs:
+      issue_number:
+        description: 'Número de la issue de GitHub donde comentar el resumen'
+        required: true
+        type: number
 jobs:
   ai-inference:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -45,3 +53,15 @@ jobs:
         run: |
           echo "## 🤖 Análisis AI de Resultados de Pruebas JUnit" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.inference.outputs.response }}" >> $GITHUB_STEP_SUMMARY
+      - name: Comment on GitHub Issue
+        if: github.event.inputs.issue_number != ''
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.inputs.issue_number }}
+          body: |
+            ## 🤖 Análisis AI de Resultados de Pruebas JUnit
+
+            ${{ steps.inference.outputs.response }}
+
+            ---
+            *Generado automáticamente por GitHub Actions - Workflow: ${{ github.workflow }} - Run: ${{ github.run_number }}*
