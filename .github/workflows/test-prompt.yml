@@ -10,12 +10,12 @@ jobs:
       - name: Read README content
         id: readme
         run: |
-          if [ -f "test.md" ]; then
+          if [ -f "junit-results.xml" ]; then
             echo "README_CONTENT<<EOF" >> $GITHUB_OUTPUT
-            cat test.md >> $GITHUB_OUTPUT
+            cat junit-results.xml >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           else
-            echo "README_CONTENT=No se encontró el archivo test.md" >> $GITHUB_OUTPUT
+            echo "README_CONTENT=No se encontró el archivo junit-results.xml" >> $GITHUB_OUTPUT
           fi
       - name: Run AI Inference Action
         id: inference
@@ -35,9 +35,9 @@ jobs:
             5. **Uso**: Cómo ejecutar o utilizar el proyecto
             6. **Características destacadas**: Funcionalidades principales o aspectos importantes
 
-            Mantén el resumen en español y hazlo claro y fácil de entender para desarrolladores que se unan al proyecto.
+            Mantén el resumen en español y hazlo claro y fácil de entender para desarrolladores que se unan al proyecto. Utiliza emojis divertidos y un lenguaje humoristico
             
-            --- CONTENIDO DEL test.md ---
+            --- CONTENIDO DEL junit-results.xml ---
             ${{ steps.readme.outputs.README_CONTENT }}
             --- FIN DEL CONTENIDO ---
       - name: Write summary with AI response
