@@ -7,17 +7,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Read README content
+      - name: Set GITHUB_OUTPUT
         id: readme
         run: |
-      - name: Set GITHUB_OUTPUT
-        run: |
           if [ -f "junit-results.xml" ]; then
-            echo "README_CONTENT<<EOF" >> $GITHUB_OUTPUT
-            cat junit-results.xml >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
+            {
+              echo "README_CONTENT<<DELIMITER"
+              cat junit-results.xml
+              echo "DELIMITER"
+            } >> $GITHUB_OUTPUT
           else
-            echo "README_CONTENT=No se encontró el archivo junit-results.xml" >> $GITHUB_OUTPUT
+            echo "README_CONTENT=No se encontró el archivo test-results/junit-results.xml" >> $GITHUB_OUTPUT
           fi
       - name: Run AI Inference Action
         id: inference
@@ -25,24 +25,23 @@ jobs:
         with:
           max-tokens: 4000
           system-prompt: |
-            Eres un experto en desarrollo de software y estás ayudando a un nuevo desarrollador a comprender un proyecto. Utiliza el contenido del junit-results.xml para proporcionar un resumen claro y conciso.
+            Eres un experto en testing y desarrollo de software. Analiza los resultados de pruebas JUnit para proporcionar un resumen claro y útil.
           prompt: |
             Por favor, analiza el siguiente contenido del archivo junit-results.xml y proporciona un resumen conciso que incluya:
 
-            1. **Propósito del proyecto**: ¿Qué hace este proyecto?
-            1. **Resumen de las pruebas**: ¿Qué pruebas se están ejecutando?
-            2. **Tecnologías principales**: ¿Qué tecnologías, frameworks o herramientas utiliza?
-            3. **Estructura del proyecto**: Organización general del código
-            4. **Instalación**: Pasos básicos para configurar el proyecto
-            5. **Uso**: Cómo ejecutar o utilizar el proyecto
-            6. **Características destacadas**: Funcionalidades principales o aspectos importantes
+            1. **📊 Resumen General**: Número total de pruebas, éxitos, fallos y tiempo de ejecución
+            2. **🧪 Pruebas Ejecutadas**: Lista de las pruebas principales que se ejecutaron
+            3. **🎯 Funcionalidades Probadas**: Qué aspectos del sistema se están validando
+            4. **⚡ Rendimiento**: Tiempos de ejecución y posibles optimizaciones
+            5. **✅ Estado del Proyecto**: Calidad general basada en los resultados
+            6. **🔧 Tecnologías Detectadas**: Frameworks y herramientas identificadas
 
-            Mantén el resumen en español y hazlo claro y fácil de entender para desarrolladores que se unan al proyecto. Utiliza emojis divertidos y un lenguaje humoristico
+            Mantén el resumen en español, usa emojis para hacerlo más visual y un tono profesional pero amigable.
             
             --- CONTENIDO DEL junit-results.xml ---
             ${{ steps.readme.outputs.README_CONTENT }}
             --- FIN DEL CONTENIDO ---
       - name: Write summary with AI response
         run: |
-          echo "## Resumen AI del contenido de junit-results.xml:" >> $GITHUB_STEP_SUMMARY
+          echo "## 🤖 Análisis AI de Resultados de Pruebas JUnit" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.inference.outputs.response }}" >> $GITHUB_STEP_SUMMARY
