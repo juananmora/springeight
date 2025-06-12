@@ -11,8 +11,19 @@ jobs:
         id: inference
         uses: actions/ai-inference@v1
         with:
-          prompt: "Resume el contenido del fichero por favor"
-          prompt-file: './README.md'
+          prompt: |
+            Por favor, lee el archivo README.md de este repositorio y proporciona un resumen conciso que incluya:
+
+            1. **Propósito del proyecto**: ¿Qué hace este proyecto?
+            2. **Tecnologías principales**: ¿Qué tecnologías, frameworks o herramientas utiliza?
+            3. **Estructura del proyecto**: Organización general del código
+            4. **Instalación**: Pasos básicos para configurar el proyecto
+            5. **Uso**: Cómo ejecutar o utilizar el proyecto
+            6. **Características destacadas**: Funcionalidades principales o aspectos importantes
+
+            Mantén el resumen en español y hazlo claro y fácil de entender para desarrolladores que se unan al proyecto.
+            
+            Archivo a resumir: README.md
       - name: Write summary with AI response
         run: |
           echo "## Resumen AI del contenido de README.md:" >> $GITHUB_STEP_SUMMARY
