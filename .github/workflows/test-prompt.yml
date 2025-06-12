@@ -10,7 +10,7 @@ jobs:
       - name: Read README content
         id: readme
         run: |
-          if [ -f "README.md" ]; then
+          if [ -f "test.md" ]; then
             echo "README_CONTENT<<EOF" >> $GITHUB_OUTPUT
             cat README.md >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
@@ -25,9 +25,10 @@ jobs:
           system-prompt: |
             Eres un experto en desarrollo de software y estás ayudando a un nuevo desarrollador a comprender un proyecto. Utiliza el contenido del README.md para proporcionar un resumen claro y conciso.
           prompt: |
-            Por favor, analiza el siguiente contenido del archivo README.md y proporciona un resumen conciso que incluya:
+            Por favor, analiza el siguiente contenido del archivo test.md y proporciona un resumen conciso que incluya:
 
             1. **Propósito del proyecto**: ¿Qué hace este proyecto?
+            1. **Resumen de las pruebas**: ¿Qué pruebas se están ejecutando?
             2. **Tecnologías principales**: ¿Qué tecnologías, frameworks o herramientas utiliza?
             3. **Estructura del proyecto**: Organización general del código
             4. **Instalación**: Pasos básicos para configurar el proyecto
