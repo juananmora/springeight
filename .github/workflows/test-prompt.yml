@@ -12,10 +12,10 @@ jobs:
         run: |
           if [ -f "test.md" ]; then
             echo "README_CONTENT<<EOF" >> $GITHUB_OUTPUT
-            cat README.md >> $GITHUB_OUTPUT
+            cat test.md >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           else
-            echo "README_CONTENT=No se encontró el archivo README.md" >> $GITHUB_OUTPUT
+            echo "README_CONTENT=No se encontró el archivo test.md" >> $GITHUB_OUTPUT
           fi
       - name: Run AI Inference Action
         id: inference
@@ -37,10 +37,10 @@ jobs:
 
             Mantén el resumen en español y hazlo claro y fácil de entender para desarrolladores que se unan al proyecto.
             
-            --- CONTENIDO DEL README.md ---
+            --- CONTENIDO DEL test.md ---
             ${{ steps.readme.outputs.README_CONTENT }}
             --- FIN DEL CONTENIDO ---
       - name: Write summary with AI response
         run: |
-          echo "## Resumen AI del contenido de README.md:" >> $GITHUB_STEP_SUMMARY
+          echo "## Resumen AI del contenido de test.md:" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.inference.outputs.response }}" >> $GITHUB_STEP_SUMMARY
