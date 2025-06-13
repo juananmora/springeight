@@ -6,18 +6,33 @@ on:
         description: 'Número de la issue de GitHub donde comentar el resumen'
         required: true
         type: number
+
 jobs:
-  ai-inference:
+  # Job 1: Preparar datos del archivo XML
+  prepare-data:
     runs-on: ubuntu-latest
     permissions:
-      issues: write
       contents: read
-      models: read
+    outputs:
+      xml-content: ${{ steps.read-xml.outputs.README_CONTENT }}
+      file-exists: ${{ steps.check-file.outputs.exists }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set GITHUB_OUTPUT
-        id: readme
+      
+      - name: Check if XML file exists
+        id: check-file
+        run: |
+          if [ -f "test-results/junit-results.xml" ]; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "✅ Archivo junit-results.xml encontrado"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "❌ Archivo junit-results.xml no encontrado"
+          fi
+      
+      - name: Read XML content
+        id: read-xml
         run: |
           if [ -f "test-results/junit-results.xml" ]; then
             {
@@ -28,11 +43,31 @@ jobs:
           else
             echo "README_CONTENT=No se encontró el archivo test-results/junit-results.xml" >> $GITHUB_OUTPUT
           fi
+
+  # Job 2: Ejecutar análisis AI
+  ai-analysis:
+    runs-on: ubuntu-latest
+    needs: prepare-data
+    permissions:
+      contents: read
+    outputs:
+      ai-response: ${{ steps.inference.outputs.response }}
+    steps:
+      - name: Show preparation results
+        run: |
+          echo "📁 Estado del archivo: ${{ needs.prepare-data.outputs.file-exists }}"
+          if [ "${{ needs.prepare-data.outputs.file-exists }}" = "true" ]; then
+            echo "✅ Procediendo con el análisis AI"
+          else
+            echo "⚠️ Analizando mensaje de error"
+          fi
+      
       - name: Run AI Inference Action
         id: inference
         uses: actions/ai-inference@v1
         with:
           max-tokens: 4000
+          model: "gpt-3.5-turbo"
           system-prompt: |
             Eres un experto en testing y desarrollo de software. Analiza los resultados de pruebas JUnit para proporcionar un resumen claro y útil.
           prompt: |
@@ -45,24 +80,109 @@ jobs:
             5. **✅ Estado del Proyecto**: Calidad general basada en los resultados
             6. **🔧 Tecnologías Detectadas**: Frameworks y herramientas identificadas
 
-            Mantén el resumen en español, usa emojis para hacerlo más visual y un tono divertido utilizando metaforas.
+            Mantén el resumen en español, usa emojis para hacerlo más visual y un tono profesional pero amigable.
             
             --- CONTENIDO DEL junit-results.xml ---
-            ${{ steps.readme.outputs.README_CONTENT }}
+            ${{ needs.prepare-data.outputs.xml-content }}
             --- FIN DEL CONTENIDO ---
-      - name: Write summary with AI response
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+
+  # Job 3: Generar resumen del workflow
+  generate-summary:
+    runs-on: ubuntu-latest
+    needs: [prepare-data, ai-analysis]
+    permissions:
+      contents: read
+    steps:
+      - name: Generate workflow summary
         run: |
+          echo "## 🚀 Pipeline de Análisis AI - Resumen de Ejecución" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📋 Estado de los Jobs:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **prepare-data**: Completado" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **ai-analysis**: Completado" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ **generate-summary**: En progreso" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📁 Análisis de Archivos:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Archivo XML encontrado**: ${{ needs.prepare-data.outputs.file-exists }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "## 🤖 Análisis AI de Resultados de Pruebas JUnit" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.inference.outputs.response }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "${{ needs.ai-analysis.outputs.ai-response }}" >> $GITHUB_STEP_SUMMARY
+
+  # Job 4: Comentar en GitHub Issue
+  comment-on-issue:
+    runs-on: ubuntu-latest
+    needs: [prepare-data, ai-analysis, generate-summary]
+    permissions:
+      issues: write
+      contents: read
+    if: github.event.inputs.issue_number != ''
+    steps:
+      - name: Prepare comment content
+        id: prepare-comment
+        run: |
+          echo "🎯 Preparando comentario para issue #${{ github.event.inputs.issue_number }}"
+      
       - name: Comment on GitHub Issue
-        if: github.event.inputs.issue_number != ''
         uses: peter-evans/create-or-update-comment@v4
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           issue-number: ${{ github.event.inputs.issue_number }}
           body: |
             ## 🤖 Análisis AI de Resultados de Pruebas JUnit
 
-            ${{ steps.inference.outputs.response }}
+            ### 📋 Información del Workflow:
+            - **Workflow**: ${{ github.workflow }}
+            - **Run**: #${{ github.run_number }}
+            - **Archivo XML encontrado**: ${{ needs.prepare-data.outputs.file-exists }}
+
+            ### 📊 Análisis Generado:
+
+            ${{ needs.ai-analysis.outputs.ai-response }}
 
             ---
-            *Generado automáticamente por GitHub Actions - Workflow: ${{ github.workflow }} - Run: ${{ github.run_number }}*
+            
+            ### 🔗 Enlaces útiles:
+            - [Ver ejecución completa](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - [Ver repositorio](${{ github.server_url }}/${{ github.repository }})
+            
+            *Generado automáticamente por GitHub Actions*
+
+  # Job 5: Finalización y limpieza (opcional)
+  finalize:
+    runs-on: ubuntu-latest
+    needs: [prepare-data, ai-analysis, generate-summary, comment-on-issue]
+    if: always() # Se ejecuta incluso si jobs anteriores fallan
+    permissions:
+      contents: read
+    steps:
+      - name: Workflow completion status
+        run: |
+          echo "🎉 Pipeline de análisis AI completado"
+          echo ""
+          echo "📊 Estado de los jobs:"
+          echo "- prepare-data: ${{ needs.prepare-data.result }}"
+          echo "- ai-analysis: ${{ needs.ai-analysis.result }}"
+          echo "- generate-summary: ${{ needs.generate-summary.result }}"
+          echo "- comment-on-issue: ${{ needs.comment-on-issue.result }}"
+          echo ""
+          if [ "${{ needs.ai-analysis.result }}" = "success" ]; then
+            echo "✅ Análisis AI ejecutado correctamente"
+          else
+            echo "❌ Error en el análisis AI"
+          fi
+          
+          if [ "${{ github.event.inputs.issue_number }}" != "" ]; then
+            if [ "${{ needs.comment-on-issue.result }}" = "success" ]; then
+              echo "✅ Comentario agregado a la issue #${{ github.event.inputs.issue_number }}"
+            else
+              echo "❌ Error al comentar en la issue"
+            fi
+          else
+            echo "ℹ️ No se especificó número de issue para comentar"
+          fi
