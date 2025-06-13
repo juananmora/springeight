@@ -95,6 +95,7 @@ jobs:
     needs: [prepare-data, ai-analysis]
     permissions:
       contents: read
+      models: read
     steps:
       - name: Generate workflow summary
         run: |
