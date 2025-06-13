@@ -32,11 +32,6 @@ jobs:
         uses: actions/ai-inference@v1
         with:
           max-tokens: 4000
-          model: "xai/grok-3"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          endpoint: "https://models.github.ai/inference"
-          system-prompt: |
-            Eres un experto en testing y desarrollo de software. Analiza los resultados de pruebas JUnit para proporcionar un resumen claro y útil.
           prompt: |
             Por favor, analiza el siguiente contenido del archivo junit-results.xml y proporciona un resumen conciso que incluya:
 
