@@ -32,6 +32,7 @@ jobs:
         uses: actions/ai-inference@v1
         with:
           max-tokens: 4000
+          model: "gpt-4"
           system-prompt: |
             Eres un experto en testing y desarrollo de software. Analiza los resultados de pruebas JUnit para proporcionar un resumen claro y útil.
           prompt: |
