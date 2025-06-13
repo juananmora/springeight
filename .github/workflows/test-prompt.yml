@@ -50,6 +50,7 @@ jobs:
     needs: prepare-data
     permissions:
       contents: read
+      models: read
     outputs:
       ai-response: ${{ steps.inference.outputs.response }}
     steps:
@@ -67,7 +68,6 @@ jobs:
         uses: actions/ai-inference@v1
         with:
           max-tokens: 4000
-          model: "gpt-3.5-turbo"
           system-prompt: |
             Eres un experto en testing y desarrollo de software. Analiza los resultados de pruebas JUnit para proporcionar un resumen claro y útil.
           prompt: |
