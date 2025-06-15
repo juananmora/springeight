@@ -34,14 +34,14 @@ jobs:
       - name: Read XML content
         id: read-xml
         run: |
-          if [ -f "test-results/junit-results.xml" ]; then
+          if [ -f "test-results/junit.xml" ]; then
             {
               echo "README_CONTENT<<DELIMITER"
-              cat test-results/junit-results.xml
+              cat test-results/junit.xml
               echo "DELIMITER"
             } >> $GITHUB_OUTPUT
           else
-            echo "README_CONTENT=No se encontró el archivo test-results/junit-results.xml" >> $GITHUB_OUTPUT
+            echo "README_CONTENT=No se encontró el archivo test-results/junit.xml" >> $GITHUB_OUTPUT
           fi
 
   # Job 2: Ejecutar análisis AI
