@@ -1,5 +1,9 @@
 name: 'Copilot Automation'
-on: [issues, pull_request]
+on: 
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [opened, edited, synchronize]
 
 jobs:
   copilot-advanced:
@@ -7,16 +11,32 @@ jobs:
     steps:
       - name: 'Checkout Repository'
         uses: actions/checkout@v5
+      
+      - name: 'Get Issue Description'
+        id: get_prompt
+        run: |
+          if [[ "${{ github.event_name }}" == "issues" ]]; then
+            PROMPT="${{ github.event.issue.body }}"
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            PROMPT="${{ github.event.pull_request.body }}"
+          else
+            PROMPT="Review this pull request for:
+            1. Code quality and best practices
+            2. Security vulnerabilities
+            3. Performance implications
+            4. Documentation completeness"
+          fi
+          
+          # Save prompt to output, handling multiline text
+          echo "prompt<<EOF" >> $GITHUB_OUTPUT
+          echo "$PROMPT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      
       - name: 'Run Copilot with Custom Config'
         uses: austenstone/copilot-cli@v1.0
         with:
           github-token: ${{ secrets.COPILOT_TOKEN }}
-          prompt: |
-            Review this pull request for:
-            1. Code quality and best practices
-            2. Security vulnerabilities
-            3. Performance implications
-            4. Documentation completeness
+          prompt: ${{ steps.get_prompt.outputs. prompt }}
           mcp-config: |
             {
               "mcpServers": {
