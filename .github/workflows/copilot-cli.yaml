@@ -36,7 +36,7 @@ jobs:
         uses: austenstone/copilot-cli@v1.0
         with:
           github-token: ${{ secrets.COPILOT_TOKEN }}
-          prompt: ${{ steps.get_prompt.outputs. prompt }}
+          prompt: /delegate ${{ steps.get_prompt.outputs. prompt }}
           mcp-config: |
             {
               "mcpServers": {
