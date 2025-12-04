@@ -1,4 +1,4 @@
-FROM openjdk:11-alpine
+FROM eclipse-temurin:11-jre-alpine
 ENTRYPOINT ["/usr/bin/springeight.sh"]
 
 COPY springeight.sh /usr/bin/springeight.sh
